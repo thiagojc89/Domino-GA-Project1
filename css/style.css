@@ -1,5 +1,7 @@
 body{
-	background-color: rgb(204, 79, 73);
+	/*background-color: rgb(204, 79, 73);*/
+	background: url(https://images.tcdn.com.br/img/img_prod/626443/luminoso_de_parede_duff_30cm_acrilico_led_luminoso_de_bar_e_churrasqueira_luminaria_placa_decorativa_4_1_20180504104710.jpg);
+	background-size: cover;
 }
 section{
 	display: flex;
