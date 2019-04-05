@@ -1,0 +1,19 @@
+body{
+	background-color: rgb(204, 79, 73);
+}
+section{
+	display: flex;
+	flex-flow: row wrap;
+
+}
+div{
+	background-color: rgb(249, 246, 214);
+	border: 3px solid black;
+	border-radius: 10px;
+	width: 60px;
+	height: 120px;
+	margin-bottom: 10px;
+}
+div{
+
+}
