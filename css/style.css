@@ -21,26 +21,26 @@ section{
 #side-A-66{
 	background-color: red;
 	border-radius: 5px;
-	/*width: 25px;*/
 	height: 55px;
+	display: flex;
+	flex-direction: column;
+	justify-content: space-around;
  }
  .side-A-66-dot{
  	display: flex;
- 	flex-flow: row wrap;
  	justify-content: space-around;
- 	padding-top: 3px;
  }
  .side-B-66-dot{
  	display: flex;
- 	flex-flow: row wrap;
  	justify-content: space-around;
- 	padding-top: 3px;
  }
  #side-B-66{
 	background-color: blue;
 	border-radius: 5px;
-	/*width: 25px;*/
 	height: 55px;
+	display: flex;
+	flex-direction: column;
+	justify-content: space-around;
  }
  .dot{
  	background-color: white;
