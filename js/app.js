@@ -1,2 +1,7 @@
-$( "div" ).draggable()
-$( "div" ).draggable( "option", "snap", true);
+$( ".domino" ).draggable()
+$( ".domino" ).draggable( "option", "snap", true);
+
+
+
+
+
