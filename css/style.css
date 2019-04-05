@@ -47,6 +47,36 @@ section{
  	border-radius: 10px;
 	width: 10px;
 	height: 10px;
-	margin: 5px 6px 0 6px;
+	/*margin: 5px 6px 0 6px;*/
 
  }
+
+#side-A-65{
+	background-color: red;
+	border-radius: 5px;
+	height: 55px;
+	display: flex;
+	flex-direction: column;
+	justify-content: space-around;
+ }
+ .side-A-65-dot{
+ 	display: flex;
+ 	justify-content: space-around;
+ 	
+ }
+ 
+ #side-B-65{
+	background-color: blue;
+	border-radius: 5px;
+	height: 55px;
+	display: flex;
+	flex-direction: column;
+	justify-content: space-around;
+}
+ .side-B-65-dot{
+	display: flex;
+ 	justify-content: space-around;
+ }
+
+
+
