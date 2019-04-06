@@ -35,19 +35,36 @@ class Domino {
 
 const game = {
 	gameSet: null,
+	cursorDominoTile: null,
+	snappedDominoTile: null,
 
 	startGame(){
 		const newGame = new Domino();
 		this.gameSet = newGame;
 
 	},	
-	selectDomino(idName) {
+	selectDominoTile(idName) {
 
-		console.log(this.gameSet.dominoTiles[idName]);
+		return this.gameSet.dominoTiles[idName];
+	},
+	checkMatch(){
+		
+		if (this.cursorDominoTile.topValue === this.snappedDominoTile.topValue ||
+			this.cursorDominoTile.topValue === this.snappedDominoTile.bottomValue||
+			this.cursorDominoTile.bottomValue === this.snappedDominoTile.topValue ||
+			this.cursorDominoTile.bottomValue === this.snappedDominoTile.bottomValue){
+
+			console.log("found a Match");
+		}else{
+			console.log("Match not Found");
+		}
+		
 	}
+			
+}	
 	// suffleDomino(){
 	// }
-}
+
 
 game.startGame()
 
@@ -65,17 +82,15 @@ $( ".domino" ).draggable();
 
 $(".domino")
 .mousedown(function() {
-	
-	game.selectDomino($(this).attr('id'))
+
+    game.cursorDominoTile = game.selectDominoTile($(this).attr('id'))
 
     $( this ).draggable( "option", "snap", true);
     $( this ).draggable( "option", "snapMode", "outer");
-    console.log("mouse down");
 })
 .mouseup(function() {
     
     $( this ).draggable( "option", "snap", false);
-	console.log("mouse up");
 })
 ;
 
@@ -83,15 +98,17 @@ $(".domino").draggable({
     // snap: ".domino",
     stop: function(event, ui) { 
         /* Get the possible snap targets: */
-        var snapped = $(this).data('uiDraggable').snapElements;
+        const snappedArray = $(this).data('uiDraggable').snapElements;
         /* Pull out only the snap targets that are "snapping": */
-        var snappedTo = $.map(snapped, function(element) {
+        const snappedTo = $.map(snappedArray, function(element) {
             return element.snapping ? element.item : null;
             //Conditional (ternary) operator
         });
+        if (snappedTo.length !== 0){
+        	game.snappedDominoTile = game.selectDominoTile($(snappedTo).attr('id'))
+        	game.checkMatch();
+        }
 
-        // console.log(snappedTo);  
-        game.selectDomino($(snappedTo).attr('id')) 
     }
 });
 
