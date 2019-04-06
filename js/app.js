@@ -1,3 +1,4 @@
+//Domino Class
 class Domino {
 	constructor(){
 		this.dominoTiles = {
@@ -33,10 +34,21 @@ class Domino {
 	}
 }
 
+//game Object, all the moves and validaton of the games will be set here.
 const game = {
+
+	//declaring a few variabes to use inside of the game object.
+	//cursoDominoTile is the domino the user ar dragging (mouse down)
+	//cursorDominoTilelocTop is the top locatio of the domino on the screen
+	//cursorDominoTilelocLeft is the Left locatio of the domino on the Scree
+	//The same aplies to the domino snapped (mouse up && snapElement diferrent than 0)
 	gameSet: null,
 	cursorDominoTile: null,
+	cursorDominoTilelocTop: null,
+	cursorDominoTilelocLeft: null,
 	snappedDominoTile: null,
+	snappedDominoTileLocTop: null,
+	snappedDominoTileLocLeft: null,
 
 	startGame(){
 		const newGame = new Domino();
@@ -47,6 +59,15 @@ const game = {
 
 		return this.gameSet.dominoTiles[idName];
 	},
+	playValidate(element){
+		const validePlay = this.checkMatch();
+		if (validePlay){
+			console.log("this is a valid play match");
+		}else{
+
+			this.goBackToPreviousLoc(element,this.cursorDominoTilelocTop,this.cursorDominoTilelocLeft);
+		}
+	},
 	checkMatch(){
 		
 		if (this.cursorDominoTile.topValue === this.snappedDominoTile.topValue ||
@@ -55,12 +76,19 @@ const game = {
 			this.cursorDominoTile.bottomValue === this.snappedDominoTile.bottomValue){
 
 			console.log("found a Match");
+			return true;
 		}else{
 			console.log("Match not Found");
+			return false;
 		}
-		
+	},
+	goBackToPreviousLoc(element,top,left){
+		$(element).css('top',top)
+		$(element).css('left',left);
+
+
+
 	}
-			
 }	
 	// suffleDomino(){
 	// }
@@ -75,42 +103,45 @@ game.startGame()
 	// const
 }
 */
-$( ".domino" ).draggable();
 // $( ".domino" ).draggable( "option", "snapMode", "outer");
-// $( "#65" ).css("transform", "rotate(90deg)");
-// $( "#54" ).css("transform", "rotate(90deg)");
+$( "#65" ).css("transform", "rotate(90deg)");
+$( "#54" ).css("transform", "rotate(90deg)");
 
-$(".domino")
+$(".domino" )
+.draggable()
+.draggable("option", "snap", true )
+.draggable("option", "snapMode", "outer")
 .mousedown(function() {
 
-    game.cursorDominoTile = game.selectDominoTile($(this).attr('id'))
 
-    $( this ).draggable( "option", "snap", true);
-    $( this ).draggable( "option", "snapMode", "outer");
+    game.cursorDominoTile = game.selectDominoTile($(this).attr('id'))	
+	game.cursorDominoTilelocTop = $(this).css('top');
+	game.cursorDominoTilelocLeft = $(this).css('left');
+	
+    // $(this).draggable( "option", "snap", true);
+    // $(this).draggable( "option", "snapMode", "outer");
+    console.log($(this).css('left'));
+    console.log($(this).css('top'));
+
 })
+
 .mouseup(function() {
-    
-    $( this ).draggable( "option", "snap", false);
-})
-;
 
-$(".domino").draggable({
-    // snap: ".domino",
-    stop: function(event, ui) { 
-        /* Get the possible snap targets: */
-        const snappedArray = $(this).data('uiDraggable').snapElements;
-        /* Pull out only the snap targets that are "snapping": */
-        const snappedTo = $.map(snappedArray, function(element) {
-            return element.snapping ? element.item : null;
-            //Conditional (ternary) operator
-        });
-        if (snappedTo.length !== 0){
-        	game.snappedDominoTile = game.selectDominoTile($(snappedTo).attr('id'))
-        	game.checkMatch();
-        }
-
+    /* Pull out only the snap targets that are "snapping": */
+	const snappedArray = $(this).data('uiDraggable').snapElements;
+    const snappedTo = $.map(snappedArray, function(element) {
+    	return element.snapping ? element.item : null; //Conditional (ternary) operator
+    });
+    if (snappedTo.length !== 0){
+    	game.snappedDominoTile = game.selectDominoTile($(snappedTo).attr('id'))
+		game.snappedDominoTilelocTop = $(this).css('top');
+		game.snappedDominoTilelocLeft = $(this).css('left');
+        game.playValidate(this);
     }
+    
+    // $( this ).draggable( "option", "snap", false);
 });
+
 
 
 
