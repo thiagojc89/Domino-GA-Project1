@@ -33,7 +33,6 @@ class Domino {
 	}
 }
 
-
 const game = {
 	gameSet: null,
 
@@ -41,40 +40,16 @@ const game = {
 		const newGame = new Domino();
 		this.gameSet = newGame;
 
-	}	
-	// selectDomino(idName){
-	// 	console.log(dominoTiles[idName]);
-	// }
+	},	
+	selectDomino(idName) {
+
+		console.log(this.gameSet.dominoTiles[idName]);
+	}
 	// suffleDomino(){
 	// }
 }
 
 game.startGame()
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 
 /*for (let i = 0; i < 7; i++){
 	for (let j = i; j < 7; j++)
@@ -89,36 +64,34 @@ $( ".domino" ).draggable();
 // $( "#54" ).css("transform", "rotate(90deg)");
 
 $(".domino")
-.mouseup(function() {
-	console.log("mouse up");
-    $( this ).draggable( "option", "snap", false);
-
-})
 .mousedown(function() {
-	console.log("mouse down");
-	console.log($(this));
-    $( this ).draggable( "option", "snap", false);
+	
+	game.selectDomino($(this).attr('id'))
+
+    $( this ).draggable( "option", "snap", true);
     $( this ).draggable( "option", "snapMode", "outer");
     console.log("mouse down");
-});
+})
+.mouseup(function() {
+    
+    $( this ).draggable( "option", "snap", false);
+	console.log("mouse up");
+})
+;
 
 $(".domino").draggable({
     // snap: ".domino",
     stop: function(event, ui) { 
         /* Get the possible snap targets: */
         var snapped = $(this).data('uiDraggable').snapElements;
-       	console.log(snapped);
         /* Pull out only the snap targets that are "snapping": */
         var snappedTo = $.map(snapped, function(element) {
             return element.snapping ? element.item : null;
-
-
             //Conditional (ternary) operator
         });
 
-        console.log(snappedTo);
-       
-        
+        // console.log(snappedTo);  
+        game.selectDomino($(snappedTo).attr('id')) 
     }
 });
 
