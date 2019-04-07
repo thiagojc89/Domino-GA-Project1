@@ -91,8 +91,6 @@ const game = {
 		console.log($classElement);
 
 		if ($classElement === "dominoH ui-draggable ui-draggable-handle"){
-			console.log($idElement);
-			console.log($(`#${$idElement} .side-H`).attr('class'));
 
 			$(`#${$idElement} .side-H .side-H-dot`).attr('class', 'side-V-dot')
 			$(`#${$idElement} .side-H`).attr('class', 'side-V')
@@ -100,12 +98,17 @@ const game = {
 
 		}
 		if ($classElement === "dominoV ui-draggable ui-draggable-handle"){
-			console.log($(`#${$idElement} .side-H`).attr('class'));
 
 			$(`#${$idElement} .side-V .side-V-dot`).attr('class', 'side-H-dot')
 			$(`#${$idElement} .side-V`).attr('class', 'side-H')
 			$(`#${$idElement}`).attr('class', 'dominoH ui-draggable ui-draggable-handle')
 		}
+	},
+	switchSide(element,angle){
+		
+
+		$($(element)).css('transform', 'rotate('+angle+'deg)')
+
 	},
 	goBackToPreviousLoc(element,top,left){
 		$(element).css('top',top)
@@ -118,27 +121,40 @@ const game = {
 game.startGame()
 
 
+
+// listeners
+
+
+
 $('body').on('keypress',function(e)  {
 	
-	console.log(game.mouseTarget);
 	if (game.mousedown) {
-		game.rotateTile(game.mouseTarget);
+		if (e.key === "r"){
+			game.rotateTile(game.mouseTarget);
+		}
+		if (e.key === "s"){
+			game.switchSide(game.mouseTarget,"0")
+		}
+		if (e.key === "a"){
+			game.switchSide(game.mouseTarget,"180")
+		}
 		
 	};
 })
 
-// listeners
-$(".dominoH , .dominoV" )
 // draggble and snap JQUERY UI
+$(".dominoH , .dominoV ")
 .draggable()
 .draggable("option", "snap", true )
 .draggable("option", "snapMode", "outer")
 
+
+
 //Mouse DOWN listener
 .mousedown(function(event) {
 
-	console.log(this);
-	console.log(event);
+	// console.log(this);
+	// console.log(event);
 	game.mousedown = true;
 	game.mouseTarget = this;
 
@@ -168,6 +184,7 @@ $(".dominoH , .dominoV" )
     
     // $( this ).draggable( "option", "snap", false);
 });
+
 
 
 
