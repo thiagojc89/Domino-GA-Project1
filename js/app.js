@@ -82,11 +82,32 @@ const game = {
 			return false;
 		}
 	},
+	rotateTile(element){
+		console.log($(element));
+		const $idElement = $(element).attr('id');
+		const $classElement = $(element).attr('class');
+		console.log($classElement);
+
+		if ($classElement === "dominoH ui-draggable ui-draggable-handle"){
+			console.log($idElement);
+			console.log($(`#${$idElement} .side-H`).attr('class'));
+
+			$(`#${$idElement} .side-H .side-H-dot`).attr('class', 'side-V-dot')
+			$(`#${$idElement} .side-H`).attr('class', 'side-V')
+			$(`#${$idElement}`).attr('class', 'dominoV ui-draggable ui-draggable-handle')
+
+		}
+		if ($classElement === "dominoV ui-draggable ui-draggable-handle"){
+			console.log($(`#${$idElement} .side-H`).attr('class'));
+
+			$(`#${$idElement} .side-V .side-V-dot`).attr('class', 'side-H-dot')
+			$(`#${$idElement} .side-V`).attr('class', 'side-H')
+			$(`#${$idElement}`).attr('class', 'dominoH ui-draggable ui-draggable-handle')
+		}
+	},
 	goBackToPreviousLoc(element,top,left){
 		$(element).css('top',top)
 		$(element).css('left',left);
-
-
 
 	}
 }	
@@ -104,10 +125,17 @@ game.startGame()
 }
 */
 // $( ".domino" ).draggable( "option", "snapMode", "outer");
-$( "#65" ).css("transform", "rotate(90deg)");
-$( "#54" ).css("transform", "rotate(90deg)");
+// $( "#65" ).css("transform", "rotate(270deg)");
+// $( "#54" ).css("transform", "rotate(270deg)");
+// $(".dominoV" )
+// .draggable()
+// .draggable("option", "snap", true )
+// .draggable("option", "snapMode", "outer")
+// .draggable( "option", "revert", "valid" )
 
-$(".domino" )
+
+
+$(".dominoH , .dominoV" )
 .draggable()
 .draggable("option", "snap", true )
 .draggable("option", "snapMode", "outer")
@@ -120,8 +148,9 @@ $(".domino" )
 	
     // $(this).draggable( "option", "snap", true);
     // $(this).draggable( "option", "snapMode", "outer");
-    console.log($(this).css('left'));
-    console.log($(this).css('top'));
+    // console.log($(this).css('left'));
+    // console.log($(this).css('top'));
+    game.rotateTile(this);
 
 })
 

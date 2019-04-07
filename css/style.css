@@ -1,6 +1,6 @@
 body{
-	/*background-color: rgb(204, 79, 73);*/
-	background: url(https://images.tcdn.com.br/img/img_prod/626443/luminoso_de_parede_duff_30cm_acrilico_led_luminoso_de_bar_e_churrasqueira_luminaria_placa_decorativa_4_1_20180504104710.jpg);
+	background-color: rgb(224, 229, 223);
+	/*background: url(https://images.tcdn.com.br/img/img_prod/626443/luminoso_de_parede_duff_30cm_acrilico_led_luminoso_de_bar_e_churrasqueira_luminaria_placa_decorativa_4_1_20180504104710.jpg);*/
 	background-size: cover;
 }
 section{
@@ -8,7 +8,7 @@ section{
 	flex-flow: row wrap;
 
 }
-.domino{
+.dominoV{
 	background-color: rgb(249, 246, 214);
 	border: 3px solid black;
 	border-radius: 10px;
@@ -19,8 +19,7 @@ section{
 	justify-content: space-between;
 	flex-direction: column;
 }
-
-#side-A-66{
+.side-V{
 	background-color: red;
 	border-radius: 5px;
 	height: 55px;
@@ -28,57 +27,42 @@ section{
 	flex-direction: column;
 	justify-content: space-around;
  }
- .side-A-66-dot{
+ .side-V-dot{
  	display: flex;
  	justify-content: space-around;
+ 	flex-direction: row;
  }
- .side-B-66-dot{
- 	display: flex;
- 	justify-content: space-around;
- }
- #side-B-66{
-	background-color: blue;
-	border-radius: 5px;
-	height: 55px;
+.dominoH{
+	background-color: rgb(249, 246, 214);
+	border: 3px solid black;
+	border-radius: 10px;
+	width: 120px; 
+	height: 60px;
+	margin: 10px;
 	display: flex;
-	flex-direction: column;
+	justify-content: space-between;
+	flex-direction: row;
+}
+.side-H{
+	background-color: red;
+	border-radius: 5px;
+	width: 55px;
+	display: flex;
+	flex-direction: row;
 	justify-content: space-around;
  }
- .dot{
+ .side-H-dot{
+ 	display: flex;
+ 	justify-content: space-around;
+ 	flex-direction: column;
+ }
+
+.dot{
  	background-color: white;
  	border-radius: 10px;
 	width: 10px;
 	height: 10px;
-	/*margin: 5px 6px 0 6px;*/
-
- }
-
-#side-A-65{
-	background-color: red;
-	border-radius: 5px;
-	height: 55px;
-	display: flex;
-	flex-direction: column;
-	justify-content: space-around;
- }
- .side-A-65-dot{
- 	display: flex;
- 	justify-content: space-around;
- 	
- }
- 
- #side-B-65{
-	background-color: blue;
-	border-radius: 5px;
-	height: 55px;
-	display: flex;
-	flex-direction: column;
-	justify-content: space-around;
 }
- .side-B-65-dot{
-	display: flex;
- 	justify-content: space-around;
- }
 
 
 
