@@ -49,6 +49,8 @@ const game = {
 	snappedDominoTile: null,
 	snappedDominoTileLocTop: null,
 	snappedDominoTileLocLeft: null,
+	mouseDown: false,
+	mouseTarget: null,
 
 	startGame(){
 		const newGame = new Domino();
@@ -111,50 +113,46 @@ const game = {
 
 	}
 }	
-	// suffleDomino(){
-	// }
 
 
 game.startGame()
 
-/*for (let i = 0; i < 7; i++){
-	for (let j = i; j < 7; j++)
-		console.log(i,j);
 
-	// const
-}
-*/
-// $( ".domino" ).draggable( "option", "snapMode", "outer");
-// $( "#65" ).css("transform", "rotate(270deg)");
-// $( "#54" ).css("transform", "rotate(270deg)");
-// $(".dominoV" )
-// .draggable()
-// .draggable("option", "snap", true )
-// .draggable("option", "snapMode", "outer")
-// .draggable( "option", "revert", "valid" )
+$('body').on('keypress',function(e)  {
+	
+	console.log(game.mouseTarget);
+	if (game.mousedown) {
+		game.rotateTile(game.mouseTarget);
+		
+	};
+})
 
-
-
+// listeners
 $(".dominoH , .dominoV" )
+// draggble and snap JQUERY UI
 .draggable()
 .draggable("option", "snap", true )
 .draggable("option", "snapMode", "outer")
-.mousedown(function() {
 
+//Mouse DOWN listener
+.mousedown(function(event) {
+
+	console.log(this);
+	console.log(event);
+	game.mousedown = true;
+	game.mouseTarget = this;
 
     game.cursorDominoTile = game.selectDominoTile($(this).attr('id'))	
 	game.cursorDominoTilelocTop = $(this).css('top');
 	game.cursorDominoTilelocLeft = $(this).css('left');
-	
-    // $(this).draggable( "option", "snap", true);
-    // $(this).draggable( "option", "snapMode", "outer");
-    // console.log($(this).css('left'));
-    // console.log($(this).css('top'));
-    game.rotateTile(this);
+    //game.rotateTile(this);
 
 })
 
+//Mouse UP listener
 .mouseup(function() {
+	game.mousedown = false;
+	game.mouseTarget = null;
 
     /* Pull out only the snap targets that are "snapping": */
 	const snappedArray = $(this).data('uiDraggable').snapElements;
