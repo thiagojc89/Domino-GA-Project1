@@ -59,8 +59,9 @@ const game = {
 	generateDominoesTiles(){
 		for (let i= 0 ;i <= 6; i++){
 			for (let j= i ;j <= 6; j++){
+				console.log(i,j);
 				
-				const $div1 = $('<div/>').attr('id',`${i}${j}`).attr('class', 'dominoV');
+				const $div1 = $('<div/>').attr('id',`${j}${i}`).attr('class', 'dominoV');
 				const $div2A = $('<div/>').attr('class','side-V');
 
 				for (let x = 0; x < 3; x++){
@@ -99,6 +100,7 @@ const game = {
 
 		this.generateDominoesTiles();
 		this.dealDominoes();
+		this.appendTotheScreen();
 
 	},	
 	dealDominoes(){
@@ -155,8 +157,9 @@ const game = {
 	},
 	selectDominoTile(idName) {
 
-		
+		console.log('selectDominoTile');
 		console.log(this.gameSet.dominoTiles[idName]);
+		console.log('selectDominoTile');
 		return this.gameSet.dominoTiles[idName];
 	},
 	playValidate(element){
@@ -265,10 +268,14 @@ $(".dominoH , .dominoV ")
 	game.mousedown = true;
 	game.mouseTarget = this;
 
+	console.log("mousedown");
+	console.log($(this).attr('id'));
 
     game.cursorDominoTile = game.selectDominoTile($(this).attr('id'))
     console.log(game.cursorDominoTile);
-   
+
+    console.log(game.cursorDominoTile);
+    console.log("mousedown");
 	game.cursorDominoTilelocTop = $(this).css('top');
 	game.cursorDominoTilelocLeft = $(this).css('left');
     //game.rotateTile(this);
@@ -297,5 +304,8 @@ $(".dominoH , .dominoV ")
 
 
 
-
+let $it;
+$(document).on('click', (e) => {
+  $it = $(e.target);
+})
 

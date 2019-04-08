@@ -15,12 +15,14 @@ h2{
 }
 #dominoPlayer1{
 	display: flex;
+	background-color: rgba(255,0,0,.5);
 	flex-direction: row;
 	justify-content: center;
 	align-items: center;
 	border: 2px solid white;
-	height: 160px;
+	height: 145px;
 	width: 800px;
+
 }
 #player2{
 	display: flex;
@@ -29,11 +31,14 @@ h2{
 }
 #dominoPlayer2{
 	display: flex;
+	background-color: rgba(0,0,255,.5);
 	flex-direction: row;
-	align-content: flex-start;
+	justify-content: center;
+	align-items: center;
 	border: 2px solid white;
-	height: 160px;
+	height: 145px;
 	width: 800px;
+	
 }
 #container{
 	display: flex;
@@ -55,7 +60,9 @@ h2{
 	align-content: flex-start;
 	border: 10px dotted black;
 	height: 600px;
-	width: 800px;
+	width: 1300px;
+	margin-top: 10px;
+	margin-bottom: 10px; 
 	margin-left: 100px;
 }
 .dominoV{
