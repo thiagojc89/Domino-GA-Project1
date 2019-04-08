@@ -51,7 +51,43 @@ const game = {
 	snappedDominoTileLocLeft: null,
 	mouseDown: false,
 	mouseTarget: null,
+	guide: ["000","010","101","111","202","212","222"],
+	generateDominoesTiles(){
+		for (let i= 0 ;i <= 6; i++){
+			for (let j= i ;j <= 6; j++){
+				
+				const $div1 = $('<div/>').attr('id',`${i}${j}`).attr('class', 'dominoV');
+				const $div2A = $('<div/>').attr('class','side-V');
 
+				for (let x = 0; x < 3; x++){
+
+					const $div3 = $('<div/>').attr('class','side-V-dot');
+		 
+					for (let y = 0; y < parseInt(this.guide[i][x]); y++){
+						
+						$('<div/>').attr('class','dot').appendTo($div3);
+						
+					}
+					$div3.appendTo($div2A);
+				}
+				$div2A.appendTo($div1);
+
+				const $div2B = $('<div/>').attr('class','side-V');
+				for (let x = 0; x < 3; x++){
+
+					const $div3 = $('<div/>').attr('class','side-V-dot');
+
+					for (let y = 0; y < parseInt(this.guide[j][x]); y++){
+						
+						$('<div/>').attr('class','dot').appendTo($div3);
+					}
+					$div3.appendTo($div2B);
+				}
+				$div2B.appendTo($div1);
+				$div1.appendTo($('#gameBoard'));
+			}
+		}
+	},
 	startGame(){
 		const newGame = new Domino();
 		this.gameSet = newGame;
@@ -119,6 +155,7 @@ const game = {
 
 
 game.startGame()
+game.generateDominoesTiles()
 
 
 
