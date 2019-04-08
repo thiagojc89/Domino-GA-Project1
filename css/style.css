@@ -8,6 +8,10 @@ body{
 h2{
 	color: white;
 }
+#panel{
+	display: flex;
+	flex-direction: row;
+}
 #player1{
 	display: flex;
 	flex-direction: column;
@@ -55,9 +59,10 @@ h2{
 
 }
 #gameBoard{
-	display: flex;
-	flex-wrap: wrap;
-	align-content: flex-start;
+	display: flex ;
+	flex-wrap: row wrap;
+	justify-content: center;
+	align-items: center;
 	border: 10px dotted black;
 	height: 600px;
 	width: 1300px;
@@ -75,7 +80,6 @@ h2{
 	display: flex;
 	justify-content: space-between;
 	flex-direction: column;
-	position: static;
 }
 .side-V{
 	background-color: rgb(249, 246, 214);
@@ -100,7 +104,6 @@ h2{
 	display: flex;
 	justify-content: space-between;
 	flex-direction: row;
-	position: static;
 }
 .side-H{
 	background-color: rgb(249, 246, 214);

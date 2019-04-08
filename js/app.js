@@ -55,11 +55,12 @@ const game = {
 	dominoesPlayer1Array: [],
 	dominoesPlayer2Array: [],
 	dominoPile: [],
+	matchWasFound: false,
 	guide: ["000","010","101","111","202","212","222"],
 	generateDominoesTiles(){
 		for (let i= 0 ;i <= 6; i++){
 			for (let j= i ;j <= 6; j++){
-				console.log(i,j);
+				
 				
 				const $div1 = $('<div/>').attr('id',`${j}${i}`).attr('class', 'dominoV');
 				const $div2A = $('<div/>').attr('class','side-V');
@@ -105,11 +106,6 @@ const game = {
 	},	
 	dealDominoes(){
 
-		// dominoesArray: [],
-		// dominoesPlayer1Array: [],
-		// dominoesPlayer2Array: [],
-		// dominoesPile: [],
-
 		for (let i = 0; i < 7; i+=1){
 			const rand = Math.floor(Math.random() * this.dominoesArray.length )
 			this.dominoesPlayer1Array.push(this.dominoesArray[rand])
@@ -152,19 +148,15 @@ const game = {
 			$('#dominoPile').append(this.dominoPile[i])
 
 		}
-
-
 	},
 	selectDominoTile(idName) {
 
-		console.log('selectDominoTile');
-		console.log(this.gameSet.dominoTiles[idName]);
-		console.log('selectDominoTile');
 		return this.gameSet.dominoTiles[idName];
 	},
 	playValidate(element){
-		const validePlay = this.checkMatch();
-		if (validePlay){
+		this.matchWasFound = this.checkMatch();
+
+		if (this.matchWasFound){
 			console.log("this is a valid play match");
 		}else{
 
@@ -172,14 +164,6 @@ const game = {
 		}
 	},
 	checkMatch(){
-
-			console.log(this.cursorDominoTile.topValue);
-			console.log(this.cursorDominoTile.topValue);
-			console.log(this.snappedDominoTile.bottomValue);
-			console.log(this.snappedDominoTile.bottomValue);
-
-
-
 		
 		if (this.cursorDominoTile.topValue === this.snappedDominoTile.topValue ||
 			this.cursorDominoTile.topValue === this.snappedDominoTile.bottomValue||
@@ -227,12 +211,11 @@ const game = {
 }	
 
 
-game.startGame()
 
+game.startGame();
 
 
 // listeners
-
 
 
 $('body').on('keypress',function(e)  {
@@ -259,6 +242,13 @@ $(".dominoH , .dominoV ")
 .draggable(
    { refreshPositions: true }
 )
+.draggable({
+  drag: function( event, ui ) {
+
+  	// console.log(event);
+  	// console.log(ui.offset);
+}
+})
 
 
 //Mouse DOWN listener
@@ -268,14 +258,8 @@ $(".dominoH , .dominoV ")
 	game.mousedown = true;
 	game.mouseTarget = this;
 
-	console.log("mousedown");
-	console.log($(this).attr('id'));
-
     game.cursorDominoTile = game.selectDominoTile($(this).attr('id'))
-    console.log(game.cursorDominoTile);
-
-    console.log(game.cursorDominoTile);
-    console.log("mousedown");
+    
 	game.cursorDominoTilelocTop = $(this).css('top');
 	game.cursorDominoTilelocLeft = $(this).css('left');
     //game.rotateTile(this);
@@ -300,6 +284,20 @@ $(".dominoH , .dominoV ")
     }
     
     // $( this ).draggable( "option", "snap", false);
+});
+
+$( "#gameBoard" )
+.droppable()
+.droppable({
+  drop: function( event, ui ) {
+  	// console.log(event);
+  	console.log(ui.draggable);
+
+  	if (game.matchWasFound){
+  		$(ui.draggable).css('top','0px').css('left','0px').appendTo($('#gameBoard'));
+  	}
+  	game.matchWasFound = false
+  }
 });
 
 
