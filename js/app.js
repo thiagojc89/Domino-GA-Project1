@@ -105,6 +105,8 @@ const game = {
 		this.dealDominoes();
 		this.appendTotheScreen();
 
+		addListeners()
+
 	},	
 	dealDominoes(){
 
@@ -213,7 +215,7 @@ const game = {
 
 
 
-game.startGame();
+// game.startGame();
 
 
 // listeners
@@ -234,98 +236,107 @@ $('body').on('keypress',function(e)  {
 		
 	};
 })
+$('button').on('click',(e) => {
 
-// draggble and snap JQUERY UI
-$(".dominoH , .dominoV ")
-.draggable()
-.draggable("option", "snap", true )
-.draggable("option", "snapMode", "outer")
-.draggable(
-   { refreshPositions: true }
-)
+	game.startGame();	
 
-
-//Mouse DOWN listener
-.mousedown(function() {
-
-	game.mousedown = true;
-	game.mouseTarget = this;
-
-    game.cursorDominoTile = game.selectDominoTile($(this).attr('id'))
-    
-	game.cursorDominoTilelocTop = $(this).css('top');
-	game.cursorDominoTilelocLeft = $(this).css('left');
-    //game.rotateTile(this);
-
-})
-
-//Mouse UP listener
-.mouseup(function(event) {
-
-
-	// this line returns to me the x position of the cursor on the page
-	
-	game.cursorXposition = event.originalEvent.pageX;
-
-	game.mousedown = false;
-	game.mouseTarget = null;
-
-    /* Pull out only the snap targets that are "snapping": */
-	const snappedArray = $(this).data('uiDraggable').snapElements;
-    const snappedTo = $.map(snappedArray, function(element) {
-    	return element.snapping ? element.item : null; //Conditional (ternary) operator
-    });
-    if (snappedTo.length !== 0){
-    	game.snappedDominoTile = game.selectDominoTile($(snappedTo).attr('id'))
-		game.snappedDominoTilelocTop = $(this).css('top');
-		game.snappedDominoTilelocLeft = $(this).css('left');
-        game.playValidate(this);
-    }
-    
-    // $( this ).draggable( "option", "snap", false);
 });
 
-$( "#gameBoard" )
-.droppable()
-.droppable({
-  drop: function( event, ui ) {
-  	
-  	// console.log(event);
-
-  	//this line returns the Width size of my droppable area.
-  	const droppableWidth = event.target.clientWidth;
-  	
-
-  	//this line returns the distance between the left side (0px) until the begining of the 
-  	// #gameBoard border.
-  	const margin = event.target.offsetLeft;
+function addListeners() {
+	// draggble and snap JQUERY UI
+	$(".dominoH , .dominoV ")
+	.draggable()
+	.draggable("option", "snap", true )
+	.draggable("option", "snapMode", "outer")
+	.draggable(
+	   { refreshPositions: true }
+	)
 
 
-  	if (game.validPlay || game.firstPlay){
+	//Mouse DOWN listener
+	.mousedown(function() {
 
-  			console.log(`margin : ${margin}`);
-  			console.log(`game.cursorXposition : ${game.cursorXposition}`);
-  			console.log(`droppableWidth : ${droppableWidth}`);
-  			console.log(`droppableWidth /2 : ${droppableWidth /2}`);
-  			console.log(`game.cursorXposition - margin : ${game.cursorXposition - margin}`);
+		console.log(this);
+		game.mousedown = true;
+		game.mouseTarget = this;
+	    game.cursorDominoTile = game.selectDominoTile($(this).attr('id'))
+		game.cursorDominoTilelocTop = $(this).css('top');
+		game.cursorDominoTilelocLeft = $(this).css('left');
+	    //game.rotateTile(this);
 
-  		if (game.cursorXposition - margin > (droppableWidth /2)){
-  			$(ui.draggable).css('top','0px').css('left','0px').appendTo($('#gameBoard'));
-  		}
-  		else{
-  			$(ui.draggable).css('top','0px').css('left','0px').prependTo($('#gameBoard'));	
+	})
 
-  		}
-  	}
-
- 	game.firstPlay = false;
-  }
-});
+	//Mouse UP listener
+	.mouseup(function(event) {
 
 
+		// this line returns to me the x position of the cursor on the page
+		
+		game.cursorXposition = event.originalEvent.pageX;
 
-let $it;
-$(document).on('click', (e) => {
-  $it = $(e.target);
-})
+		game.mousedown = false;
+		game.mouseTarget = null;
+
+	    /* Pull out only the snap targets that are "snapping": */
+		const snappedArray = $(this).data('uiDraggable').snapElements;
+	    const snappedTo = $.map(snappedArray, function(element) {
+	    	return element.snapping ? element.item : null; //Conditional (ternary) operator
+	    });
+	    if (snappedTo.length !== 0){
+	    	game.snappedDominoTile = game.selectDominoTile($(snappedTo).attr('id'))
+			game.snappedDominoTilelocTop = $(this).css('top');
+			game.snappedDominoTilelocLeft = $(this).css('left');
+	        game.playValidate(this);
+	    }
+	    
+	    // $( this ).draggable( "option", "snap", false);
+	});
+
+	$( "#gameBoard" )
+	.droppable()
+	.droppable({
+	  drop: function( event, ui ) {
+	  	
+	  	// console.log(event);
+
+	  	//this line returns the Width size of my droppable area.
+	  	const droppableWidth = event.target.clientWidth;
+	  	
+
+	  	//this line returns the distance between the left side (0px) until the begining of the 
+	  	// #gameBoard border.
+	  	const margin = event.target.offsetLeft;
+
+
+	  	if (game.validPlay || game.firstPlay){
+
+	  			console.log(`margin : ${margin}`);
+	  			console.log(`game.cursorXposition : ${game.cursorXposition}`);
+	  			console.log(`droppableWidth : ${droppableWidth}`);
+	  			console.log(`droppableWidth /2 : ${droppableWidth /2}`);
+	  			console.log(`game.cursorXposition - margin : ${game.cursorXposition - margin}`);
+
+	  		if (game.cursorXposition - margin > (droppableWidth /2)){
+	  			$(ui.draggable).css('top','0px').css('left','0px').appendTo($('#gameBoard'));
+	  		}
+	  		else{
+	  			$(ui.draggable).css('top','0px').css('left','0px').prependTo($('#gameBoard'));	
+
+	  		}
+	  	}
+
+	 	game.firstPlay = false;
+	  }
+	});
+}
+
+
+
+
+
+//debug listenter
+// let $it;
+// $(document).on('click', (e) => {
+//   $it = $(e.target);
+// });
 
