@@ -104,6 +104,7 @@ const game = {
 		this.generateDominoesTiles();
 		this.dealDominoes();
 		this.appendTotheScreen();
+		$('#image-start-game').hide()
 
 		addListeners()
 
@@ -236,9 +237,10 @@ $('body').on('keypress',function(e)  {
 		
 	};
 })
-$('button').on('click',(e) => {
+$('#image-start-game').on('click',(e) => {
 
 	game.startGame();	
+
 
 });
 
