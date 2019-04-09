@@ -55,7 +55,9 @@ const game = {
 	dominoesPlayer1Array: [],
 	dominoesPlayer2Array: [],
 	dominoPile: [],
-	matchWasFound: false,
+	validPlay: false,
+	cursorXposition: null,
+	firstPlay: true,
 	guide: ["000","010","101","111","202","212","222"],
 	generateDominoesTiles(){
 		for (let i= 0 ;i <= 6; i++){
@@ -154,9 +156,8 @@ const game = {
 		return this.gameSet.dominoTiles[idName];
 	},
 	playValidate(element){
-		this.matchWasFound = this.checkMatch();
-
-		if (this.matchWasFound){
+		this.validPlay = this.checkMatch();
+		if (this.validPlay){
 			console.log("this is a valid play match");
 		}else{
 
@@ -242,18 +243,17 @@ $(".dominoH , .dominoV ")
 .draggable(
    { refreshPositions: true }
 )
-.draggable({
-  drag: function( event, ui ) {
+// .draggable({
+//   drag: function( event, ui ) {
 
-  	// console.log(event);
-  	// console.log(ui.offset);
-}
-})
+//   // console.log(event);
+//   // console.log(ui.offset);
+// }
+// })
 
 
 //Mouse DOWN listener
-.mousedown(function(event) {
-
+.mousedown(function() {
 
 	game.mousedown = true;
 	game.mouseTarget = this;
@@ -267,7 +267,14 @@ $(".dominoH , .dominoV ")
 })
 
 //Mouse UP listener
-.mouseup(function() {
+.mouseup(function(event) {
+
+
+	// this line returns to me the x position of the cursor on the page
+	console.log(event.originalEvent.pageX);
+	
+	game.cursorXposition = event.originalEvent.pageX;
+
 	game.mousedown = false;
 	game.mouseTarget = null;
 
@@ -290,13 +297,31 @@ $( "#gameBoard" )
 .droppable()
 .droppable({
   drop: function( event, ui ) {
+  	
   	// console.log(event);
-  	console.log(ui.draggable);
 
-  	if (game.matchWasFound){
-  		$(ui.draggable).css('top','0px').css('left','0px').appendTo($('#gameBoard'));
+  	//this line returns the Width size of my droppable area.
+  	console.log(event.target.clientWidth);
+  	const droppableWidth = event.target.clientWidth;
+  	
+
+  	//this line returns the distance between the left side (0px) until the begining of the 
+  	// #gameBoard border.
+  	console.log(event.target.offsetLeft);
+  	const margin = event.target.offsetLeft;
+
+
+  	if (game.validPlay || game.firstPlay){
+  		if (game.cursorXposition > (droppableWidth + margin)/2){
+  			$(ui.draggable).css('top','0px').css('left','0px').appendTo($('#gameBoard'));
+  		}
+  		else{
+  			$(ui.draggable).css('top','0px').css('left','0px').prependTo($('#gameBoard'));	
+
+  		}
   	}
-  	game.matchWasFound = false
+
+ 	game.firstPlay = false;
   }
 });
 

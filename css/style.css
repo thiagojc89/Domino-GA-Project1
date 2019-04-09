@@ -60,7 +60,8 @@ h2{
 }
 #gameBoard{
 	display: flex ;
-	flex-wrap: row wrap;
+	/*flex-wrap: row wrap;*/
+	flex-direction: row;
 	justify-content: center;
 	align-items: center;
 	border: 10px dotted black;
