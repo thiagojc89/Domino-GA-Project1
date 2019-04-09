@@ -93,7 +93,7 @@ const game = {
 				}
 				$div2B.appendTo($div1);
 
-				this.dominoesArray.push($div1);//$div1.appendTo($('#gameBoard'));
+				this.dominoesArray.push($div1);
 			}
 		}
 	},
@@ -243,13 +243,6 @@ $(".dominoH , .dominoV ")
 .draggable(
    { refreshPositions: true }
 )
-// .draggable({
-//   drag: function( event, ui ) {
-
-//   // console.log(event);
-//   // console.log(ui.offset);
-// }
-// })
 
 
 //Mouse DOWN listener
@@ -271,7 +264,6 @@ $(".dominoH , .dominoV ")
 
 
 	// this line returns to me the x position of the cursor on the page
-	console.log(event.originalEvent.pageX);
 	
 	game.cursorXposition = event.originalEvent.pageX;
 
@@ -301,18 +293,23 @@ $( "#gameBoard" )
   	// console.log(event);
 
   	//this line returns the Width size of my droppable area.
-  	console.log(event.target.clientWidth);
   	const droppableWidth = event.target.clientWidth;
   	
 
   	//this line returns the distance between the left side (0px) until the begining of the 
   	// #gameBoard border.
-  	console.log(event.target.offsetLeft);
   	const margin = event.target.offsetLeft;
 
 
   	if (game.validPlay || game.firstPlay){
-  		if (game.cursorXposition > (droppableWidth + margin)/2){
+
+  			console.log(`margin : ${margin}`);
+  			console.log(`game.cursorXposition : ${game.cursorXposition}`);
+  			console.log(`droppableWidth : ${droppableWidth}`);
+  			console.log(`droppableWidth /2 : ${droppableWidth /2}`);
+  			console.log(`game.cursorXposition - margin : ${game.cursorXposition - margin}`);
+
+  		if (game.cursorXposition - margin > (droppableWidth /2)){
   			$(ui.draggable).css('top','0px').css('left','0px').appendTo($('#gameBoard'));
   		}
   		else{
