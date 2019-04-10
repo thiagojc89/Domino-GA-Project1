@@ -152,7 +152,9 @@ const game = {
 			
 			$('#dominoPile').append(this.dominoPile[i])
 
+
 		}
+		$('#dominoPile').hide()
 	},
 	selectDominoTile(idName) {
 
