@@ -211,13 +211,34 @@ const game = {
 		$(element).css('top',top)
 		$(element).css('left',left);
 
+	},
+	dominoPurchase(id){
+		const rand = Math.floor(Math.random() * this.dominoPile.length )
+
+		console.log(id);
+
+		console.log(this.dominoPile[rand]);
+
+		if (id === 'player1DominoGrid'){
+
+			this.dominoPile[rand].appendTo($('#dominoPlayer1'));
+		}
+		if (id === 'player2DominoGrid'){
+			this.dominoPile[rand].appendTo($('#dominoPlayer2'));
+		}
+
+		this.dominoPile.splice(rand,1);
+		if (this.dominoPile.length === 0){
+			$('.newDomino').off('click')
+			$('.newDomino').css('background-color','rgb(197, 197, 197)');
+		}
+
 	}
 }	
 
 
 
 // game.startGame();
-
 
 // listeners
 
@@ -330,15 +351,23 @@ function addListeners() {
 	 	game.firstPlay = false;
 	  }
 	});
+
+	$('#player1DominoGrid , #player2DominoGrid').on('click',(e) =>{
+
+			
+			game.dominoPurchase(e.target.id)
+	}) 
+
 }
 
 
 
 
 
-//debug listenter
-// let $it;
-// $(document).on('click', (e) => {
-//   $it = $(e.target);
-// });
+
+// debug listenter
+let $it;
+$(document).on('click', (e) => {
+  $it = $(e.target);
+});
 
