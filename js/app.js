@@ -64,12 +64,12 @@ const game = {
 			for (let j= i ;j <= 6; j++){
 				
 				
-				const $div1 = $('<div/>').attr('id',`${j}${i}`).attr('class', 'dominoV');
-				const $div2A = $('<div/>').attr('class','side-V');
+				const $div1 = $('<div/>').attr('id',`${j}${i}`).attr('class', 'dominoH');
+				const $div2A = $('<div/>').attr('class','side-H');
 
 				for (let x = 0; x < 3; x++){
 
-					const $div3 = $('<div/>').attr('class','side-V-dot');
+					const $div3 = $('<div/>').attr('class','side-H-dot');
 		 
 					for (let y = 0; y < parseInt(this.guide[i][x]); y++){
 						
@@ -80,10 +80,10 @@ const game = {
 				}
 				$div2A.appendTo($div1);
 
-				const $div2B = $('<div/>').attr('class','side-V');
+				const $div2B = $('<div/>').attr('class','side-H');
 				for (let x = 0; x < 3; x++){
 
-					const $div3 = $('<div/>').attr('class','side-V-dot');
+					const $div3 = $('<div/>').attr('class','side-H-dot');
 
 					for (let y = 0; y < parseInt(this.guide[j][x]); y++){
 						
