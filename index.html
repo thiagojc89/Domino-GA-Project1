@@ -12,12 +12,26 @@
 		<div id="player1">
 		<h2>Player 1</h2>
 		<div id="dominoPlayer1"></div>
-		<div id="player1DominoGrid" class="newDomino">Domino ++</div>
+		<div>
+			<div id="player1DominoGrid" class="newDomino">Domino ++</div>
+			<div class="passTurn">Pass Turn</div>
+		</div>
 	</div>
 	<div id="container">
 		<!-- <div id="dominoPile"></div> -->
 		<div id="gameBoard">
-			<div id="image-start-game"></div>
+			<div id="instruction">
+				<ol>
+					<li>Click on the Start button to beggin the game.</li>
+					<li>Drag and drop the domino inside the gamebord.</li>
+					<li>To performe a match drag the domino and snap to another domino.</li>
+					<li>To Rotate the Domino hold the cursor and press "R".</li>
+					<li>To Switch the Domino sides hold the cursor and press "S" or "A".</li>
+				</ol>
+			</div>
+			<div id="image-start-game">
+				
+			</div>
 		</div>
 	</div>
 	<div id="dominoPile"></div>
@@ -25,7 +39,10 @@
 	<div id="player2">
 		<h2>Player 2</h2>
 		<div id="dominoPlayer2"></div>
-		<div id="player2DominoGrid" class="newDomino">Domino ++</div>
+		<div>
+				<div id="player2DominoGrid" class="newDomino">Domino ++</div>
+				<div class="passTurn">Pass Turn</div>
+		</div>
 	</div>
 <script type="text/javascript" src="js/app.js"></script>
 </body>

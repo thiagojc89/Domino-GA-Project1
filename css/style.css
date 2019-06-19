@@ -148,6 +148,20 @@ h2{
 	font-size: 20px;
 	padding: 10px;
 }
-
-
-
+.passTurn{
+	background-color: rgba(247, 247, 71, 0.701);
+	border-radius: 20px;
+	border: 4px solid black;
+	margin-top: 5px;
+	margin-left: 20px;
+	font-size: 20px;
+	padding: 10px;
+}
+#instruction{
+	font-size: 20px;
+	width: 500px;
+	margin-right: 20px;
+}
+#instruction ol li{
+	margin-top: 10px;
+}

@@ -59,10 +59,10 @@ const game = {
 	cursorXposition: null,
 	firstPlay: true,
 	guide: ["000","010","101","111","202","212","222"],
+	switchTurn: 'player1',
 	generateDominoesTiles(){
 		for (let i= 0 ;i <= 6; i++){
 			for (let j= i ;j <= 6; j++){
-				
 				
 				const $div1 = $('<div/>').attr('id',`${j}${i}`).attr('class', 'dominoH');
 				const $div2A = $('<div/>').attr('class','side-H');
@@ -105,6 +105,9 @@ const game = {
 		this.dealDominoes();
 		this.appendTotheScreen();
 		$('#image-start-game').hide()
+		$('#instruction').hide()
+		$('#dominoPlayer2').css('backgroundColor', 'gray')
+		$('#dominoPlayer2 div').css('visibility', 'hidden')
 
 		addListeners()
 
@@ -137,11 +140,9 @@ const game = {
 			
 			$('#dominoPlayer1').append(this.dominoesPlayer1Array[i])
 			
-
 		}
 		
 		for (let i = 0; i < 7; i+=1){
-			
 			
 			$('#dominoPlayer2').append(this.dominoesPlayer2Array[i])
 
@@ -149,9 +150,7 @@ const game = {
 
 		for (let i = 0; i < 14; i+=1){
 			
-			
 			$('#dominoPile').append(this.dominoPile[i])
-
 
 		}
 		$('#dominoPile').hide()
@@ -162,10 +161,8 @@ const game = {
 	},
 	playValidate(element){
 		this.validPlay = this.checkMatch();
-		if (this.validPlay){
-			console.log("this is a valid play match");
-		}else{
-
+		if (!this.validPlay){
+			
 			this.goBackToPreviousLoc(element,this.cursorDominoTilelocTop,this.cursorDominoTilelocLeft);
 		}
 	},
@@ -235,6 +232,22 @@ const game = {
 			$('.newDomino').css('background-color','rgb(197, 197, 197)');
 		}
 
+	},
+	changePlayer(){
+		if (game.switchTurn ==="player1"){
+			$('#dominoPlayer1').css('backgroundColor', 'gray')
+			$('#dominoPlayer1 div').css('visibility', 'hidden')
+			$('#dominoPlayer2').css('backgroundColor','rgba(0, 0, 255, 0.5)')
+			$('#dominoPlayer2 div').css('visibility', 'visible')
+			game.switchTurn = "player2"
+		}
+		else{
+			$('#dominoPlayer2').css('backgroundColor', 'gray')
+			$('#dominoPlayer2 div').css('visibility', 'hidden')
+			$('#dominoPlayer1').css('backgroundColor','rgba(255, 0, 0, 0.5)')
+			$('#dominoPlayer1 div').css('visibility', 'visible')
+			game.switchTurn = "player1"
+		}
 	}
 }	
 
@@ -281,7 +294,7 @@ function addListeners() {
 	//Mouse DOWN listener
 	.mousedown(function() {
 
-		console.log(this);
+		// console.log(this);
 		game.mousedown = true;
 		game.mouseTarget = this;
 	    game.cursorDominoTile = game.selectDominoTile($(this).attr('id'))
@@ -296,7 +309,6 @@ function addListeners() {
 
 
 		// this line returns to me the x position of the cursor on the page
-		
 		game.cursorXposition = event.originalEvent.pageX;
 
 		game.mousedown = false;
@@ -335,19 +347,21 @@ function addListeners() {
 
 	  	if (game.validPlay || game.firstPlay){
 
-	  			console.log(`margin : ${margin}`);
-	  			console.log(`game.cursorXposition : ${game.cursorXposition}`);
-	  			console.log(`droppableWidth : ${droppableWidth}`);
-	  			console.log(`droppableWidth /2 : ${droppableWidth /2}`);
-	  			console.log(`game.cursorXposition - margin : ${game.cursorXposition - margin}`);
+	  			// console.log(`margin : ${margin}`);
+	  			// console.log(`game.cursorXposition : ${game.cursorXposition}`);
+	  			// console.log(`droppableWidth : ${droppableWidth}`);
+	  			// console.log(`droppableWidth /2 : ${droppableWidth /2}`);
+	  			// console.log(`game.cursorXposition - margin : ${game.cursorXposition - margin}`);
 
 	  		if (game.cursorXposition - margin > (droppableWidth /2)){
 	  			$(ui.draggable).css('top','0px').css('left','0px').appendTo($('#gameBoard'));
 	  		}
 	  		else{
 	  			$(ui.draggable).css('top','0px').css('left','0px').prependTo($('#gameBoard'));	
+			}
 
-	  		}
+			game.changePlayer();
+  
 	  	}
 
 	 	game.firstPlay = false;
@@ -355,18 +369,12 @@ function addListeners() {
 	});
 
 	$('#player1DominoGrid , #player2DominoGrid').on('click',(e) =>{
-
-			
 			game.dominoPurchase(e.target.id)
-	}) 
+	})
+
+	$('.passTurn').on('click',game.changePlayer)
 
 }
-
-
-
-
-
-
 // debug listenter
 let $it;
 $(document).on('click', (e) => {
