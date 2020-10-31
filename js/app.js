@@ -64,36 +64,49 @@ const game = {
 		for (let i= 0 ;i <= 6; i++){
 			for (let j= i ;j <= 6; j++){
 				
-				const $div1 = $('<div/>').attr('id',`${j}${i}`).attr('class', 'dominoH');
-				const $div2A = $('<div/>').attr('class','side-H');
+				const domino = document.createElement('div')
+				domino.setAttribute('id', `${j}${i}`)
+				domino.classList.add('dominoH')
+				
+				const sideA = document.createElement('div')
+				sideA.classList.add('side-H')
+
 
 				for (let x = 0; x < 3; x++){
 
-					const $div3 = $('<div/>').attr('class','side-H-dot');
+					const div = document.createElement('div')
+					div.classList.add('side-H-dot')
 		 
 					for (let y = 0; y < parseInt(this.guide[i][x]); y++){
 						
-						$('<div/>').attr('class','dot').appendTo($div3);
+						const dot = document.createElement('div')
+						dot.classList.add('dot')
+						div.appendChild(dot);
 						
 					}
-					$div3.appendTo($div2A);
+					sideA.appendChild(div);
 				}
-				$div2A.appendTo($div1);
+				domino.appendChild(sideA);
 
-				const $div2B = $('<div/>').attr('class','side-H');
+				const sideB = document.createElement('div')
+				sideB.setAttribute('class', 'side-H')
+
 				for (let x = 0; x < 3; x++){
 
-					const $div3 = $('<div/>').attr('class','side-H-dot');
+					const div = document.createElement('div')
+					div.classList.add('side-H-dot')
 
 					for (let y = 0; y < parseInt(this.guide[j][x]); y++){
 						
-						$('<div/>').attr('class','dot').appendTo($div3);
+						const dot = document.createElement('div')
+						dot.classList.add('dot')
+						div.appendChild(dot);
 					}
-					$div3.appendTo($div2B);
+					sideB.appendChild(div);
 				}
-				$div2B.appendTo($div1);
+				domino.appendChild(sideB);
 
-				this.dominoesArray.push($div1);
+				this.dominoesArray.push(domino);
 			}
 		}
 	},
