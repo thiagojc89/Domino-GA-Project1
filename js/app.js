@@ -61,6 +61,7 @@ const game = {
 	guide: ["000","010","101","111","202","212","222"],
 	switchTurn: 'player1',
 	generateDominoesTiles(){
+		
 		for (let i= 0 ;i <= 6; i++){
 			for (let j= i ;j <= 6; j++){
 				
