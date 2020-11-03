@@ -71,7 +71,6 @@ const game = {
 				const sideA = document.createElement('div')
 				sideA.classList.add('side-H')
 
-
 				for (let x = 0; x < 3; x++){
 
 					const div = document.createElement('div')
@@ -87,9 +86,11 @@ const game = {
 					sideA.appendChild(div);
 				}
 				domino.appendChild(sideA);
+				
+				
 
 				const sideB = document.createElement('div')
-				sideB.setAttribute('class', 'side-H')
+				sideB.classList.add('side-H')
 
 				for (let x = 0; x < 3; x++){
 
@@ -117,10 +118,13 @@ const game = {
 		this.generateDominoesTiles();
 		this.dealDominoes();
 		this.appendTotheScreen();
-		$('#image-start-game').hide()
-		$('#instruction').hide()
-		$('#dominoPlayer2').css('backgroundColor', 'gray')
-		$('#dominoPlayer2 div').css('visibility', 'hidden')
+
+		document.querySelector('#image-start-game').setAttribute('style', 'display: none')
+		document.querySelector('#instruction').setAttribute('style', 'display: none')
+		document.querySelector('#dominoPlayer2').setAttribute('style', 'background-color: gray')
+		document.querySelectorAll('#dominoPlayer2 div').forEach(div=>{
+			div.setAttribute('style', 'visibility: hidden')
+		})
 
 		addListeners()
 
@@ -149,24 +153,22 @@ const game = {
 		}	
 	},
 	appendTotheScreen(){
-		for (let i = 0; i < 7; i+=1){
-			
-			$('#dominoPlayer1').append(this.dominoesPlayer1Array[i])
-			
+		for (let i = 0; i < 7; i+=1){	
+			document.querySelector('#dominoPlayer1').appendChild(this.dominoesPlayer1Array[i])		
 		}
 		
-		for (let i = 0; i < 7; i+=1){
-			
-			$('#dominoPlayer2').append(this.dominoesPlayer2Array[i])
-
+		for (let i = 0; i < 7; i+=1){	
+			document.querySelector('#dominoPlayer2').appendChild(this.dominoesPlayer2Array[i])
 		}
-
+		
 		for (let i = 0; i < 14; i+=1){
 			
+			document.querySelector('#dominoPile').appendChild(this.dominoPile[i])
 			$('#dominoPile').append(this.dominoPile[i])
 
 		}
-		$('#dominoPile').hide()
+		document.querySelector('#dominoPile').setAttribute('style', 'display: none')
+		
 	},
 	selectDominoTile(idName) {
 
@@ -233,10 +235,11 @@ const game = {
 
 		if (id === 'player1DominoGrid'){
 
-			this.dominoPile[rand].appendTo($('#dominoPlayer1'));
+			document.querySelector('#dominoPlayer1').appendChild(this.dominoPile[rand]);
+		
 		}
 		if (id === 'player2DominoGrid'){
-			this.dominoPile[rand].appendTo($('#dominoPlayer2'));
+			document.querySelector('#dominoPlayer2').appendChild(this.dominoPile[rand]);
 		}
 
 		this.dominoPile.splice(rand,1);
