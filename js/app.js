@@ -148,7 +148,6 @@ const game = {
 	},
 	appendTotheScreen(){
 		for (let i = 0; i < 7; i+=1){
-			console.log(this.dominoesPlayer1Array[i]);
 			document.querySelector('#dominoPlayer1').appendChild(this.dominoesPlayer1Array[i])		
 		}
 		
@@ -157,9 +156,7 @@ const game = {
 		}
 		
 		for (let i = 0; i < 14; i+=1){
-			
 			document.querySelector('#dominoPile').appendChild(this.dominoPile[i])
-			// $('#dominoPile').append(this.dominoPile[i])
 
 		}
 		document.querySelector('#dominoPile').setAttribute('style', 'display: none')
