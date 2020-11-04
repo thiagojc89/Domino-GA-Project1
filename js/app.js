@@ -85,9 +85,7 @@ const game = {
 					}
 					sideA.appendChild(div);
 				}
-				domino.appendChild(sideA);
-				
-				
+				domino.appendChild(sideA);				
 
 				const sideB = document.createElement('div')
 				sideB.classList.add('side-H')
@@ -130,30 +128,27 @@ const game = {
 
 	},	
 	dealDominoes(){
-
-		for (let i = 0; i < 7; i+=1){
-			const rand = Math.floor(Math.random() * this.dominoesArray.length )
-			this.dominoesPlayer1Array.push(this.dominoesArray[rand])
-			this.dominoesArray.splice(rand,1)
-
+		const getRandom = () => Math.floor(Math.random() * this.dominoesArray.length)
+		for (let i = 0; i < 21; i+=1){
+			if (i < 7){
+				const indexPlayer1 = getRandom()
+				this.dominoesPlayer1Array.push(this.dominoesArray[indexPlayer1])
+				this.dominoesArray.splice(indexPlayer1,1)
+				
+				const indexPlayer2 = getRandom()
+				this.dominoesPlayer2Array.push(this.dominoesArray[indexPlayer2])
+				this.dominoesArray.splice(indexPlayer2,1)
+			}
+			else {
+				const indexPile = getRandom()
+				this.dominoPile.push(this.dominoesArray[indexPile])
+				this.dominoesArray.splice(indexPile,1)
+			}
 		}
-		
-		for (let i = 0; i < 7; i+=1){
-			const rand = Math.floor(Math.random() * this.dominoesArray.length )
-			this.dominoesPlayer2Array.push(this.dominoesArray[rand])
-			this.dominoesArray.splice(rand,1)
-
-		}
-		
-		for (let i = 0; i < 14; i+=1){
-			const rand = Math.floor(Math.random() * this.dominoesArray.length )
-			this.dominoPile.push(this.dominoesArray[rand])
-			this.dominoesArray.splice(rand,1)
-
-		}	
 	},
 	appendTotheScreen(){
-		for (let i = 0; i < 7; i+=1){	
+		for (let i = 0; i < 7; i+=1){
+			console.log(this.dominoesPlayer1Array[i]);
 			document.querySelector('#dominoPlayer1').appendChild(this.dominoesPlayer1Array[i])		
 		}
 		
@@ -164,7 +159,7 @@ const game = {
 		for (let i = 0; i < 14; i+=1){
 			
 			document.querySelector('#dominoPile').appendChild(this.dominoPile[i])
-			$('#dominoPile').append(this.dominoPile[i])
+			// $('#dominoPile').append(this.dominoPile[i])
 
 		}
 		document.querySelector('#dominoPile').setAttribute('style', 'display: none')
@@ -187,8 +182,6 @@ const game = {
 			this.cursorDominoTile.topValue === this.snappedDominoTile.bottomValue||
 			this.cursorDominoTile.bottomValue === this.snappedDominoTile.topValue ||
 			this.cursorDominoTile.bottomValue === this.snappedDominoTile.bottomValue){
-
-			console.log("found a Match");
 			return true;
 		}else{
 			console.log("Match not Found");
@@ -228,10 +221,6 @@ const game = {
 	},
 	dominoPurchase(id){
 		const rand = Math.floor(Math.random() * this.dominoPile.length )
-
-		console.log(id);
-
-		console.log(this.dominoPile[rand]);
 
 		if (id === 'player1DominoGrid'){
 
