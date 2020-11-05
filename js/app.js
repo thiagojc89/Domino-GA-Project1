@@ -61,8 +61,8 @@ const game = {
 	guide: ["000","010","101","111","202","212","222"],
 	switchTurn: 'player1',
 	generateDominoesTiles(){
-		for (let i= 0 ;i <= 6; i++){
-			for (let j= i ;j <= 6; j++){
+		for (let i= 0; i <= 6; i++){
+			for (let j= i; j <= 6; j++){
 				
 				const domino = document.createElement('div')
 				domino.setAttribute('id', `${j}${i}`)
@@ -80,12 +80,12 @@ const game = {
 						
 						const dot = document.createElement('div')
 						dot.classList.add('dot')
-						div.appendChild(dot);
+						div.appendChild(dot)
 						
 					}
-					sideA.appendChild(div);
+					sideA.appendChild(div)
 				}
-				domino.appendChild(sideA);				
+				domino.appendChild(sideA)				
 
 				const sideB = document.createElement('div')
 				sideB.classList.add('side-H')
@@ -99,23 +99,23 @@ const game = {
 						
 						const dot = document.createElement('div')
 						dot.classList.add('dot')
-						div.appendChild(dot);
+						div.appendChild(dot)
 					}
-					sideB.appendChild(div);
+					sideB.appendChild(div)
 				}
-				domino.appendChild(sideB);
+				domino.appendChild(sideB)
 
-				this.dominoesArray.push(domino);
+				this.dominoesArray.push(domino)
 			}
 		}
 	},
 	startGame(){
-		const newGame = new Domino();
-		this.gameSet = newGame;
+		const newGame = new Domino()
+		this.gameSet = newGame
 
-		this.generateDominoesTiles();
-		this.dealDominoes();
-		this.appendTotheScreen();
+		this.generateDominoesTiles()
+		this.dealDominoes()
+		this.appendTotheScreen()
 
 		document.querySelector('#image-start-game').setAttribute('style', 'display: none')
 		document.querySelector('#instruction').setAttribute('style', 'display: none')
@@ -148,50 +148,40 @@ const game = {
 	},
 	appendTotheScreen(){
 		for (let i = 0; i < 7; i+=1){
-			console.log(this.dominoesPlayer1Array[i]);
 			document.querySelector('#dominoPlayer1').appendChild(this.dominoesPlayer1Array[i])		
-		}
-		
+		}	
 		for (let i = 0; i < 7; i+=1){	
 			document.querySelector('#dominoPlayer2').appendChild(this.dominoesPlayer2Array[i])
-		}
-		
+		}	
 		for (let i = 0; i < 14; i+=1){
-			
 			document.querySelector('#dominoPile').appendChild(this.dominoPile[i])
-			// $('#dominoPile').append(this.dominoPile[i])
-
 		}
-		document.querySelector('#dominoPile').setAttribute('style', 'display: none')
-		
+		document.querySelector('#dominoPile').setAttribute('style', 'display: none')	
 	},
 	selectDominoTile(idName) {
-
-		return this.gameSet.dominoTiles[idName];
+		return this.gameSet.dominoTiles[idName]
 	},
 	playValidate(element){
-		this.validPlay = this.checkMatch();
-		if (!this.validPlay){
-			
-			this.goBackToPreviousLoc(element,this.cursorDominoTilelocTop,this.cursorDominoTilelocLeft);
+		this.validPlay = this.checkMatch()
+		if (!this.validPlay){	
+			this.goBackToPreviousLoc(element,this.cursorDominoTilelocTop,this.cursorDominoTilelocLeft)
 		}
 	},
-	checkMatch(){
-		
+	checkMatch(){	
 		if (this.cursorDominoTile.topValue === this.snappedDominoTile.topValue ||
 			this.cursorDominoTile.topValue === this.snappedDominoTile.bottomValue||
 			this.cursorDominoTile.bottomValue === this.snappedDominoTile.topValue ||
 			this.cursorDominoTile.bottomValue === this.snappedDominoTile.bottomValue){
-			return true;
+			return true
 		}else{
-			console.log("Match not Found");
-			return false;
+			console.log("Match not Found")
+			return false
 		}
 	},
 	rotateTile(element){
 		
-		const $idElement = $(element).attr('id');
-		const $classElement = $(element).attr('class');
+		const $idElement = $(element).attr('id')
+		const $classElement = $(element).attr('class')
 		
 
 		if ($classElement === "dominoH ui-draggable ui-draggable-handle"){
@@ -209,34 +199,31 @@ const game = {
 		}
 	},
 	switchSide(element,angle){
-		
-
 		$($(element)).css('transform', 'rotate('+angle+'deg)')
-
 	},
 	goBackToPreviousLoc(element,top,left){
 		$(element).css('top',top)
-		$(element).css('left',left);
-
+		$(element).css('left',left)
 	},
 	dominoPurchase(id){
 		const rand = Math.floor(Math.random() * this.dominoPile.length )
-
 		if (id === 'player1DominoGrid'){
-
-			document.querySelector('#dominoPlayer1').appendChild(this.dominoPile[rand]);
-		
+			document.querySelector('#dominoPlayer1').appendChild(this.dominoPile[rand])		
 		}
 		if (id === 'player2DominoGrid'){
-			document.querySelector('#dominoPlayer2').appendChild(this.dominoPile[rand]);
+			document.querySelector('#dominoPlayer2').appendChild(this.dominoPile[rand])
 		}
-
-		this.dominoPile.splice(rand,1);
-		if (this.dominoPile.length === 0){
-			$('.newDomino').off('click')
-			$('.newDomino').css('background-color','rgb(197, 197, 197)');
-		}
-
+		this.dominoPile.splice(rand,1)
+		// if (this.dominoPile.length === 0){
+		// 	document.querySelectorAll('.newDomino').forEach(elem=>{
+		// 		console.log(elem)
+		// 		console.log(document.querySelector(`#${elem.id}`))
+		// 		document.querySelector(`#${elem.id}`).removeListener('click')
+		// 		document.querySelector(`#${elem.id}`).setAttribute('style', 'background-color', 'rgb(197, 197, 197)')
+		// 	})
+		// 	// $('.newDomino').off('click')
+		// 	// $('.newDomino').css('background-color','rgb(197, 197, 197)')
+		// }
 	},
 	changePlayer(){
 		if (game.switchTurn ==="player1"){
@@ -258,7 +245,7 @@ const game = {
 
 
 
-// game.startGame();
+// game.startGame()
 
 // listeners
 
@@ -267,7 +254,7 @@ $('body').on('keypress',function(e)  {
 	
 	if (game.mousedown) {
 		if (e.key === "r"){
-			game.rotateTile(game.mouseTarget);
+			game.rotateTile(game.mouseTarget)
 		}
 		if (e.key === "s"){
 			game.switchSide(game.mouseTarget,"0")
@@ -276,14 +263,14 @@ $('body').on('keypress',function(e)  {
 			game.switchSide(game.mouseTarget,"180")
 		}
 		
-	};
+	}
 })
 $('#image-start-game').on('click',(e) => {
 
-	game.startGame();	
+	game.startGame()	
 
 
-});
+})
 
 function addListeners() {
 	// draggble and snap JQUERY UI
@@ -299,13 +286,13 @@ function addListeners() {
 	//Mouse DOWN listener
 	.mousedown(function() {
 
-		// console.log(this);
-		game.mousedown = true;
-		game.mouseTarget = this;
+		// console.log(this)
+		game.mousedown = true
+		game.mouseTarget = this
 	    game.cursorDominoTile = game.selectDominoTile($(this).attr('id'))
-		game.cursorDominoTilelocTop = $(this).css('top');
-		game.cursorDominoTilelocLeft = $(this).css('left');
-	    //game.rotateTile(this);
+		game.cursorDominoTilelocTop = $(this).css('top')
+		game.cursorDominoTilelocLeft = $(this).css('left')
+	    //game.rotateTile(this)
 
 	})
 
@@ -314,75 +301,77 @@ function addListeners() {
 
 
 		// this line returns to me the x position of the cursor on the page
-		game.cursorXposition = event.originalEvent.pageX;
+		game.cursorXposition = event.originalEvent.pageX
 
-		game.mousedown = false;
-		game.mouseTarget = null;
+		game.mousedown = false
+		game.mouseTarget = null
 
 	    /* Pull out only the snap targets that are "snapping": */
-		const snappedArray = $(this).data('uiDraggable').snapElements;
+		const snappedArray = $(this).data('uiDraggable').snapElements
 	    const snappedTo = $.map(snappedArray, function(element) {
-	    	return element.snapping ? element.item : null; //Conditional (ternary) operator
-	    });
+	    	return element.snapping ? element.item : null //Conditional (ternary) operator
+	    })
 	    if (snappedTo.length !== 0){
 	    	game.snappedDominoTile = game.selectDominoTile($(snappedTo).attr('id'))
-			game.snappedDominoTilelocTop = $(this).css('top');
-			game.snappedDominoTilelocLeft = $(this).css('left');
-	        game.playValidate(this);
+			game.snappedDominoTilelocTop = $(this).css('top')
+			game.snappedDominoTilelocLeft = $(this).css('left')
+	        game.playValidate(this)
 	    }
 	    
-	    // $( this ).draggable( "option", "snap", false);
-	});
+	    // $( this ).draggable( "option", "snap", false)
+	})
 
 	$( "#gameBoard" )
 	.droppable()
 	.droppable({
 	  drop: function( event, ui ) {
 	  	
-	  	// console.log(event);
+	  	// console.log(event)
 
 	  	//this line returns the Width size of my droppable area.
-	  	const droppableWidth = event.target.clientWidth;
+	  	const droppableWidth = event.target.clientWidth
 	  	
 
 	  	//this line returns the distance between the left side (0px) until the begining of the 
 	  	// #gameBoard border.
-	  	const margin = event.target.offsetLeft;
+	  	const margin = event.target.offsetLeft
 
 
 	  	if (game.validPlay || game.firstPlay){
 
-	  			// console.log(`margin : ${margin}`);
-	  			// console.log(`game.cursorXposition : ${game.cursorXposition}`);
-	  			// console.log(`droppableWidth : ${droppableWidth}`);
-	  			// console.log(`droppableWidth /2 : ${droppableWidth /2}`);
-	  			// console.log(`game.cursorXposition - margin : ${game.cursorXposition - margin}`);
+	  			// console.log(`margin : ${margin}`)
+	  			// console.log(`game.cursorXposition : ${game.cursorXposition}`)
+	  			// console.log(`droppableWidth : ${droppableWidth}`)
+	  			// console.log(`droppableWidth /2 : ${droppableWidth /2}`)
+	  			// console.log(`game.cursorXposition - margin : ${game.cursorXposition - margin}`)
 
 	  		if (game.cursorXposition - margin > (droppableWidth /2)){
-	  			$(ui.draggable).css('top','0px').css('left','0px').appendTo($('#gameBoard'));
+	  			$(ui.draggable).css('top','0px').css('left','0px').appendTo($('#gameBoard'))
 	  		}
 	  		else{
-	  			$(ui.draggable).css('top','0px').css('left','0px').prependTo($('#gameBoard'));	
+	  			$(ui.draggable).css('top','0px').css('left','0px').prependTo($('#gameBoard'))	
 			}
 
-			game.changePlayer();
+			game.changePlayer()
   
 	  	}
 
-	 	game.firstPlay = false;
+	 	game.firstPlay = false
 	  }
-	});
-
-	$('#player1DominoGrid , #player2DominoGrid').on('click',(e) =>{
-			game.dominoPurchase(e.target.id)
 	})
 
+	$('#player1DominoGrid , #player2DominoGrid').on('click',function _func(e){
+			game.dominoPurchase(e.target.id)
+		if (game.dominoPile.length === 7){
+			console.log("teste")
+			document.querySelector("#player1DominoGrid").removeEventListener('click', _func)
+		}
+	})
 	$('.passTurn').on('click',game.changePlayer)
-
 }
 // debug listenter
-let $it;
+let $it
 $(document).on('click', (e) => {
-  $it = $(e.target);
-});
+  $it = $(e.target)
+})
 
