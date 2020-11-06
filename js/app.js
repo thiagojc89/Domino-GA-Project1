@@ -155,10 +155,6 @@ const game = {
 		}	
 		for (let i = 0; i < 14; i+=1){
 			document.querySelector('#dominoPile').appendChild(this.dominoPile[i])
-<<<<<<< HEAD
-
-=======
->>>>>>> vanilla
 		}
 		document.querySelector('#dominoPile').setAttribute('style', 'display: none')	
 	},
@@ -363,14 +359,13 @@ function addListeners() {
 	 	game.firstPlay = false
 	  }
 	})
-
-	$('#player1DominoGrid , #player2DominoGrid').on('click',function _func(e){
-			game.dominoPurchase(e.target.id)
-		if (game.dominoPile.length === 7){
-			console.log("teste")
-			document.querySelector("#player1DominoGrid").removeEventListener('click', _func)
-		}
-	})
+	function _func(e) {
+		if (game.dominoPile.length > 0) game.dominoPurchase(e.target.id)
+		else e.target.removeEventListener('click', _func)
+		console.log("bye more")
+	}
+	document.querySelector('#player1DominoGrid').addEventListener('click', _func)
+	document.querySelector('#player2DominoGrid').addEventListener('click', _func)
 	$('.passTurn').on('click',game.changePlayer)
 }
 // debug listenter
