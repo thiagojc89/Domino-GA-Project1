@@ -243,14 +243,8 @@ const game = {
 	}
 }	
 
-
-
-// game.startGame()
-
 // listeners
-
-
-$('body').on('keypress',function(e)  {
+document.body.addEventListener('keypress', function (e) {
 	
 	if (game.mousedown) {
 		if (e.key === "r"){
@@ -265,12 +259,7 @@ $('body').on('keypress',function(e)  {
 		
 	}
 })
-$('#image-start-game').on('click',(e) => {
-
-	game.startGame()	
-
-
-})
+document.querySelector("#image-start-game").addEventListener('click', ()=>game.startGame())
 
 function addListeners() {
 	// draggble and snap JQUERY UI
@@ -362,16 +351,15 @@ function addListeners() {
 	function _func(e) {
 		if (game.dominoPile.length > 0) game.dominoPurchase(e.target.id)
 		else e.target.removeEventListener('click', _func)
-		console.log("bye more")
 	}
-	document.querySelector('#player1DominoGrid').addEventListener('click', _func)
-	document.querySelector('#player2DominoGrid').addEventListener('click', _func)
-	document.querySelector('.passTurn').addEventListener('click', game.changePlayer)
-	// $('.passTurn').on('click',game.changePlayer)
+	document.querySelectorAll('.newDomino').forEach(elem=>{
+		elem.addEventListener('click', _func)	
+	})
+	document.querySelectorAll('.passTurn').forEach(elem=>{
+		elem.addEventListener('click', game.changePlayer)
+	})
+	
 }
 // debug listenter
-let $it
-$(document).on('click', (e) => {
-  $it = $(e.target)
-})
+// document.addEventListener('click', e => console.log(e.target))
 
