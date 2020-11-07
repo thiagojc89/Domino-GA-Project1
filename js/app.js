@@ -366,7 +366,8 @@ function addListeners() {
 	}
 	document.querySelector('#player1DominoGrid').addEventListener('click', _func)
 	document.querySelector('#player2DominoGrid').addEventListener('click', _func)
-	$('.passTurn').on('click',game.changePlayer)
+	document.querySelector('.passTurn').addEventListener('click', game.changePlayer)
+	// $('.passTurn').on('click',game.changePlayer)
 }
 // debug listenter
 let $it
