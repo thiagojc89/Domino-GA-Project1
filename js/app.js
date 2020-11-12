@@ -120,9 +120,13 @@ const game = {
 		document.querySelector('#image-start-game').setAttribute('style', 'display: none')
 		document.querySelector('#instruction').setAttribute('style', 'display: none')
 		document.querySelector('#dominoPlayer2').setAttribute('style', 'background-color: gray')
-		document.querySelectorAll('#dominoPlayer2 div').forEach(div=>{
-			div.setAttribute('style', 'visibility: hidden')
-		})
+		document.querySelector('#dominoPlayer2').childNodes.forEach(elem => elem.setAttribute('style', 'visibility: hidden'))
+
+
+
+		// document.querySelectorAll('#dominoPlayer2 div').forEach(div=>{
+		// 	div.setAttribute('style', 'visibility: hidden')
+		// })
 
 		addListeners()
 
@@ -226,18 +230,24 @@ const game = {
 		// }
 	},
 	changePlayer(){
+		const player1 = document.querySelector('#dominoPlayer1')
+		const player2 = document.querySelector('#dominoPlayer2')
 		if (game.switchTurn ==="player1"){
-			$('#dominoPlayer1').css('backgroundColor', 'gray')
-			$('#dominoPlayer1 div').css('visibility', 'hidden')
-			$('#dominoPlayer2').css('backgroundColor','rgba(0, 0, 255, 0.5)')
-			$('#dominoPlayer2 div').css('visibility', 'visible')
+
+			player1.setAttribute('style', 'background-color: gray')
+			player1.childNodes.forEach(elem => elem.setAttribute('style', 'visibility: hidden'))
+			
+			player2.setAttribute('style', 'background-color: rgba(0, 0, 255, 0.5)')
+			player2.childNodes.forEach(elem => elem.setAttribute('style', 'visibility: visible'))
 			game.switchTurn = "player2"
 		}
 		else{
-			$('#dominoPlayer2').css('backgroundColor', 'gray')
-			$('#dominoPlayer2 div').css('visibility', 'hidden')
-			$('#dominoPlayer1').css('backgroundColor','rgba(255, 0, 0, 0.5)')
-			$('#dominoPlayer1 div').css('visibility', 'visible')
+
+			player2.setAttribute('style', 'background-color: gray')
+			player2.childNodes.forEach(elem => elem.setAttribute('style', 'visibility: hidden'))
+	
+			player1.setAttribute('style', 'background-color: rgba(255, 0, 0, 0.5)')
+			player1.childNodes.forEach(elem => elem.setAttribute('style', 'visibility: visible'))
 			game.switchTurn = "player1"
 		}
 	}
@@ -263,91 +273,90 @@ document.querySelector("#image-start-game").addEventListener('click', ()=>game.s
 
 function addListeners() {
 	// draggble and snap JQUERY UI
-	$(".dominoH , .dominoV ")
-	.draggable()
-	.draggable("option", "snap", true )
-	.draggable("option", "snapMode", "outer")
-	.draggable(
-	   { refreshPositions: true }
-	)
-
+	// $(".dominoH , .dominoV ")
+	// .draggable()
+	// .draggable("option", "snap", true )
+	// .draggable("option", "snapMode", "outer")
+	// .draggable(
+	//    { refreshPositions: true }
+	// )
 
 	//Mouse DOWN listener
-	.mousedown(function() {
+	// .mousedown(function() {
 
-		// console.log(this)
-		game.mousedown = true
-		game.mouseTarget = this
-	    game.cursorDominoTile = game.selectDominoTile($(this).attr('id'))
-		game.cursorDominoTilelocTop = $(this).css('top')
-		game.cursorDominoTilelocLeft = $(this).css('left')
-	    //game.rotateTile(this)
+	// 	// console.log(this)
+	// 	game.mousedown = true
+	// 	game.mouseTarget = this
+	//     game.cursorDominoTile = game.selectDominoTile($(this).attr('id'))
+	// 	game.cursorDominoTilelocTop = $(this).css('top')
+	// 	game.cursorDominoTilelocLeft = $(this).css('left')
+	//     //game.rotateTile(this)
 
-	})
+	// })
 
 	//Mouse UP listener
-	.mouseup(function(event) {
+	// .mouseup(function(event) {
 
 
-		// this line returns to me the x position of the cursor on the page
-		game.cursorXposition = event.originalEvent.pageX
+	// 	// this line returns to me the x position of the cursor on the page
+	// 	game.cursorXposition = event.originalEvent.pageX
 
-		game.mousedown = false
-		game.mouseTarget = null
+	// 	game.mousedown = false
+	// 	game.mouseTarget = null
 
-	    /* Pull out only the snap targets that are "snapping": */
-		const snappedArray = $(this).data('uiDraggable').snapElements
-	    const snappedTo = $.map(snappedArray, function(element) {
-	    	return element.snapping ? element.item : null //Conditional (ternary) operator
-	    })
-	    if (snappedTo.length !== 0){
-	    	game.snappedDominoTile = game.selectDominoTile($(snappedTo).attr('id'))
-			game.snappedDominoTilelocTop = $(this).css('top')
-			game.snappedDominoTilelocLeft = $(this).css('left')
-	        game.playValidate(this)
-	    }
+	//     /* Pull out only the snap targets that are "snapping": */
+	// 	const snappedArray = $(this).data('uiDraggable').snapElements
+	//     const snappedTo = $.map(snappedArray, function(element) {
+	//     	return element.snapping ? element.item : null //Conditional (ternary) operator
+	//     })
+	//     if (snappedTo.length !== 0){
+	//     	game.snappedDominoTile = game.selectDominoTile($(snappedTo).attr('id'))
+	// 		game.snappedDominoTilelocTop = $(this).css('top')
+	// 		game.snappedDominoTilelocLeft = $(this).css('left')
+	//         game.playValidate(this)
+	//     }
 	    
-	    // $( this ).draggable( "option", "snap", false)
-	})
+	//     // $( this ).draggable( "option", "snap", false)
+	// })
 
-	$( "#gameBoard" )
-	.droppable()
-	.droppable({
-	  drop: function( event, ui ) {
+	// $( "#gameBoard" )
+	// .droppable()
+	// .droppable({
+	//   drop: function( event, ui ) {
 	  	
-	  	// console.log(event)
+	//   	// console.log(event)
 
-	  	//this line returns the Width size of my droppable area.
-	  	const droppableWidth = event.target.clientWidth
+	//   	//this line returns the Width size of my droppable area.
+	//   	const droppableWidth = event.target.clientWidth
 	  	
 
-	  	//this line returns the distance between the left side (0px) until the begining of the 
-	  	// #gameBoard border.
-	  	const margin = event.target.offsetLeft
+	//   	//this line returns the distance between the left side (0px) until the begining of the 
+	//   	// #gameBoard border.
+	//   	const margin = event.target.offsetLeft
 
 
-	  	if (game.validPlay || game.firstPlay){
+	//   	if (game.validPlay || game.firstPlay){
 
-	  			// console.log(`margin : ${margin}`)
-	  			// console.log(`game.cursorXposition : ${game.cursorXposition}`)
-	  			// console.log(`droppableWidth : ${droppableWidth}`)
-	  			// console.log(`droppableWidth /2 : ${droppableWidth /2}`)
-	  			// console.log(`game.cursorXposition - margin : ${game.cursorXposition - margin}`)
+	//   			// console.log(`margin : ${margin}`)
+	//   			// console.log(`game.cursorXposition : ${game.cursorXposition}`)
+	//   			// console.log(`droppableWidth : ${droppableWidth}`)
+	//   			// console.log(`droppableWidth /2 : ${droppableWidth /2}`)
+	//   			// console.log(`game.cursorXposition - margin : ${game.cursorXposition - margin}`)
 
-	  		if (game.cursorXposition - margin > (droppableWidth /2)){
-	  			$(ui.draggable).css('top','0px').css('left','0px').appendTo($('#gameBoard'))
-	  		}
-	  		else{
-	  			$(ui.draggable).css('top','0px').css('left','0px').prependTo($('#gameBoard'))	
-			}
+	//   		if (game.cursorXposition - margin > (droppableWidth /2)){
+	//   			$(ui.draggable).css('top','0px').css('left','0px').appendTo($('#gameBoard'))
+	//   		}
+	//   		else{
+	//   			$(ui.draggable).css('top','0px').css('left','0px').prependTo($('#gameBoard'))	
+	// 		}
 
-			game.changePlayer()
+	// 		game.changePlayer()
   
-	  	}
+	//   	}
 
-	 	game.firstPlay = false
-	  }
-	})
+	//  	game.firstPlay = false
+	//   }
+	// })
 	function _func(e) {
 		if (game.dominoPile.length > 0) game.dominoPurchase(e.target.id)
 		else e.target.removeEventListener('click', _func)
