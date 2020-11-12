@@ -218,16 +218,11 @@ const game = {
 			document.querySelector('#dominoPlayer2').appendChild(this.dominoPile[rand])
 		}
 		this.dominoPile.splice(rand,1)
-		// if (this.dominoPile.length === 0){
-		// 	document.querySelectorAll('.newDomino').forEach(elem=>{
-		// 		console.log(elem)
-		// 		console.log(document.querySelector(`#${elem.id}`))
-		// 		document.querySelector(`#${elem.id}`).removeListener('click')
-		// 		document.querySelector(`#${elem.id}`).setAttribute('style', 'background-color', 'rgb(197, 197, 197)')
-		// 	})
-		// 	// $('.newDomino').off('click')
-		// 	// $('.newDomino').css('background-color','rgb(197, 197, 197)')
-		// }
+		if (this.dominoPile.length === 0){
+			document.querySelectorAll('.newDomino').forEach(elem=>{
+				elem.setAttribute('style', 'background-color: rgb(197, 197, 197)')
+			})
+		}
 	},
 	changePlayer(){
 		const player1 = document.querySelector('#dominoPlayer1')
