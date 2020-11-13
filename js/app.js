@@ -183,24 +183,26 @@ const game = {
 		}
 	},
 	rotateTile(element){
-		
-		const $idElement = $(element).attr('id')
-		const $classElement = $(element).attr('class')
+		console.log(element)
+		// const idLement = document.querySelector(element)
+		const $idElement = element.getAttribute('id')
+		const $classElement = element.getAttribute('class')
 		
 
-		if ($classElement === "dominoH ui-draggable ui-draggable-handle"){
+		// if (element.class === "dominoH ui-draggable ui-draggable-handle"){
+		if ($classElement === "dominoH"){
 
-			$(`#${$idElement} .side-H .side-H-dot`).attr('class', 'side-V-dot')
-			$(`#${$idElement} .side-H`).attr('class', 'side-V')
-			$(`#${$idElement}`).attr('class', 'dominoV ui-draggable ui-draggable-handle')
+			document.querySelector(`#${$idElement} .side-H .side-H-dot`).setAttribute('class', 'side-V-dot')
+			document.querySelector(`#${$idElement} .side-H`).setAttribute('class', 'side-V')
+			document.querySelector(`#${$idElement}`).setAttribute('class', 'dominoV ')
 
 		}
-		if ($classElement === "dominoV ui-draggable ui-draggable-handle"){
+		// if ($classElement === "dominoV ui-draggable ui-draggable-handle"){
 
-			$(`#${$idElement} .side-V .side-V-dot`).attr('class', 'side-H-dot')
-			$(`#${$idElement} .side-V`).attr('class', 'side-H')
-			$(`#${$idElement}`).attr('class', 'dominoH ui-draggable ui-draggable-handle')
-		}
+		// 	$(`#${$idElement} .side-V .side-V-dot`).attr('class', 'side-H-dot')
+		// 	$(`#${$idElement} .side-V`).attr('class', 'side-H')
+		// 	$(`#${$idElement}`).attr('class', 'dominoH ui-draggable ui-draggable-handle')
+		// }
 	},
 	switchSide(element,angle){
 		$($(element)).css('transform', 'rotate('+angle+'deg)')
@@ -269,25 +271,31 @@ document.querySelector("#image-start-game").addEventListener('click', ()=>game.s
 function addListeners() {
 	// draggble and snap JQUERY UI
 	// $(".dominoH , .dominoV ")
-	// .draggable()
-	// .draggable("option", "snap", true )
-	// .draggable("option", "snapMode", "outer")
-	// .draggable(
-	//    { refreshPositions: true }
-	// )
+	document.querySelectorAll('.dominoV, .dominoH').forEach(elem=>{
 
-	//Mouse DOWN listener
-	// .mousedown(function() {
-
-	// 	// console.log(this)
-	// 	game.mousedown = true
-	// 	game.mouseTarget = this
-	//     game.cursorDominoTile = game.selectDominoTile($(this).attr('id'))
-	// 	game.cursorDominoTilelocTop = $(this).css('top')
-	// 	game.cursorDominoTilelocLeft = $(this).css('left')
-	//     //game.rotateTile(this)
-
-	// })
+		// .draggable()
+		// .draggable("option", "snap", true )
+		// .draggable("option", "snapMode", "outer")
+		// .draggable(
+			//    { refreshPositions: true }
+			// )
+			
+		//Mouse DOWN listener
+		elem.addEventListener('mousedown',function(e) {
+			
+			console.log(e.target)
+			game.mousedown = true
+			game.mouseTarget = e.target
+			// game.cursorDominoTile = game.selectDominoTile($(this).attr('id'))
+			game.cursorDominoTile = game.selectDominoTile(e.target.id)
+			// game.cursorDominoTilelocTop = $(this).css('top')
+			game.cursorDominoTilelocTop = e.target.top
+			// game.cursorDominoTilelocLeft = $(this).css('left')
+			game.cursorDominoTilelocLeft = e.target.left
+			game.rotateTile(e.target)
+			
+		})
+	})
 
 	//Mouse UP listener
 	// .mouseup(function(event) {
