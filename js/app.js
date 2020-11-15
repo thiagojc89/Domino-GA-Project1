@@ -65,7 +65,7 @@ const game = {
 			for (let j= i; j <= 6; j++){
 				
 				const domino = document.createElement('div')
-				domino.setAttribute('id', `${j}${i}`)
+				domino.setAttribute('id', `id${j}${i}`)
 				domino.classList.add('dominoH')
 				
 				const sideA = document.createElement('div')
@@ -104,6 +104,9 @@ const game = {
 					sideB.appendChild(div)
 				}
 				domino.appendChild(sideB)
+
+				domino.classList.add('tile')
+
 
 				this.dominoesArray.push(domino)
 			}
@@ -185,17 +188,23 @@ const game = {
 	rotateTile(element){
 		console.log(element)
 		// const idLement = document.querySelector(element)
+
 		const $idElement = element.getAttribute('id')
-		const $classElement = element.getAttribute('class')
+		console.log($idElement)
 		
 
 		// if (element.class === "dominoH ui-draggable ui-draggable-handle"){
-		if ($classElement === "dominoH"){
+		if (element.classList.contains("tile")){
 
-			document.querySelector(`#${$idElement} .side-H .side-H-dot`).setAttribute('class', 'side-V-dot')
-			document.querySelector(`#${$idElement} .side-H`).setAttribute('class', 'side-V')
-			document.querySelector(`#${$idElement}`).setAttribute('class', 'dominoV ')
+			// document.querySelectorAll(`#${$idElement} .side-H .side-H-dot`).forEach(elem=>elem.setAttribute('class', 'side-V-dot'))
+			// document.querySelectorAll(`#${$idElement} .side-H`).forEach(elem=>elem.setAttribute('class', 'side-V'))
+			document.querySelector(`#${$idElement}`).setAttribute('class', 'dominoV')
 
+		}
+		else {
+			// document.querySelectorAll(`#${$idElement} .side-V .side-V-dot`).forEach(elem => elem.setAttribute('class', 'side-H-dot'))
+			// document.querySelectorAll(`#${$idElement} .side-V`).forEach(elem => elem.setAttribute('class', 'side-H'))
+			document.querySelector(`#${$idElement}`).setAttribute('class', 'dominoH')
 		}
 		// if ($classElement === "dominoV ui-draggable ui-draggable-handle"){
 
@@ -271,7 +280,9 @@ document.querySelector("#image-start-game").addEventListener('click', ()=>game.s
 function addListeners() {
 	// draggble and snap JQUERY UI
 	// $(".dominoH , .dominoV ")
-	document.querySelectorAll('.dominoV, .dominoH').forEach(elem=>{
+	// document.querySelectorAll('.dominoV, .dominoH').forEach(elem=>{
+	document.querySelectorAll('.tile').forEach(elem=>{
+		// console.log("element => ", elem)
 
 		// .draggable()
 		// .draggable("option", "snap", true )
@@ -283,16 +294,16 @@ function addListeners() {
 		//Mouse DOWN listener
 		elem.addEventListener('mousedown',function(e) {
 			
-			console.log(e.target)
+			console.log(e.currentTarget)
 			game.mousedown = true
-			game.mouseTarget = e.target
+			game.mouseTarget = e.currentTarget
 			// game.cursorDominoTile = game.selectDominoTile($(this).attr('id'))
-			game.cursorDominoTile = game.selectDominoTile(e.target.id)
+			game.cursorDominoTile = game.selectDominoTile(e.currentTarget.id)
 			// game.cursorDominoTilelocTop = $(this).css('top')
-			game.cursorDominoTilelocTop = e.target.top
+			game.cursorDominoTilelocTop = e.currentTarget.top
 			// game.cursorDominoTilelocLeft = $(this).css('left')
-			game.cursorDominoTilelocLeft = e.target.left
-			game.rotateTile(e.target)
+			game.cursorDominoTilelocLeft = e.currentTarget.left
+			// game.rotateTile(e.target)
 			
 		})
 	})
@@ -372,6 +383,7 @@ function addListeners() {
 	})
 	
 }
+game.startGame()
 // debug listenter
 // document.addEventListener('click', e => console.log(e.target))
 
