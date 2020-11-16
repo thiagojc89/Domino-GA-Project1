@@ -186,32 +186,35 @@ const game = {
 		}
 	},
 	rotateTile(element){
-		console.log(element)
-		// const idLement = document.querySelector(element)
-
-		const $idElement = element.getAttribute('id')
-		console.log($idElement)
 		
+		if (element.classList.contains('dominoH')){
 
-		// if (element.class === "dominoH ui-draggable ui-draggable-handle"){
-		if (element.classList.contains("tile")){
-
-			// document.querySelectorAll(`#${$idElement} .side-H .side-H-dot`).forEach(elem=>elem.setAttribute('class', 'side-V-dot'))
-			// document.querySelectorAll(`#${$idElement} .side-H`).forEach(elem=>elem.setAttribute('class', 'side-V'))
-			document.querySelector(`#${$idElement}`).setAttribute('class', 'dominoV')
-
+			element.querySelectorAll('.side-H').forEach(elem=>{
+				elem.classList.remove('side-H')
+				elem.classList.add('side-V')
+				
+				elem.childNodes.forEach(elem2=>{
+					elem2.classList.remove('side-H-dot')
+					elem2.classList.add('side-V-dot')
+				})
+			})
+			element.classList.remove('dominoH')
+			element.classList.add('dominoV')	
 		}
 		else {
-			// document.querySelectorAll(`#${$idElement} .side-V .side-V-dot`).forEach(elem => elem.setAttribute('class', 'side-H-dot'))
-			// document.querySelectorAll(`#${$idElement} .side-V`).forEach(elem => elem.setAttribute('class', 'side-H'))
-			document.querySelector(`#${$idElement}`).setAttribute('class', 'dominoH')
-		}
-		// if ($classElement === "dominoV ui-draggable ui-draggable-handle"){
+			element.querySelectorAll('.side-V').forEach(elem => {
+				elem.classList.remove('side-V')
+				elem.classList.add('side-H')
 
-		// 	$(`#${$idElement} .side-V .side-V-dot`).attr('class', 'side-H-dot')
-		// 	$(`#${$idElement} .side-V`).attr('class', 'side-H')
-		// 	$(`#${$idElement}`).attr('class', 'dominoH ui-draggable ui-draggable-handle')
-		// }
+				elem.childNodes.forEach(elem2 => {
+					elem2.classList.remove('side-V-dot')
+					elem2.classList.add('side-H-dot')
+				})
+			})
+			element.classList.remove('dominoV')
+			element.classList.add('dominoH')
+		}
+		
 	},
 	switchSide(element,angle){
 		$($(element)).css('transform', 'rotate('+angle+'deg)')
