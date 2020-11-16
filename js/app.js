@@ -214,10 +214,10 @@ const game = {
 			element.classList.remove('dominoV')
 			element.classList.add('dominoH')
 		}
-		
+
 	},
 	switchSide(element,angle){
-		$($(element)).css('transform', 'rotate('+angle+'deg)')
+		element.setAttribute('style', `transform: rotate(${angle}deg)`)
 	},
 	goBackToPreviousLoc(element,top,left){
 		$(element).css('top',top)
