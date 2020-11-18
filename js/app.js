@@ -220,8 +220,8 @@ const game = {
 		element.setAttribute('style', `transform: rotate(${angle}deg)`)
 	},
 	goBackToPreviousLoc(element,top,left){
-		$(element).css('top',top)
-		$(element).css('left',left)
+		element.setAttribute('style', `top: ${top}`)
+		element.setAttribute('style', `top: ${left}`)
 	},
 	dominoPurchase(id){
 		const rand = Math.floor(Math.random() * this.dominoPile.length )
@@ -287,32 +287,22 @@ document.body.addEventListener('keypress', function (e) {
 document.querySelector("#image-start-game").addEventListener('click', ()=>game.startGame())
 
 function addListeners() {
-	// draggble and snap JQUERY UI
 	// $(".dominoH , .dominoV ")
 	// document.querySelectorAll('.dominoV, .dominoH').forEach(elem=>{
 	document.querySelectorAll('.tile').forEach(elem=>{
-		// console.log("element => ", elem)
 
-		// .draggable()
-		// .draggable("option", "snap", true )
-		// .draggable("option", "snapMode", "outer")
-		// .draggable(
-			//    { refreshPositions: true }
-			// )
+		// make this element draggable
+		elem.draggable=true
+
+		
 			
 		//Mouse DOWN listener
 		elem.addEventListener('mousedown',function(e) {
-			
-			console.log(e.currentTarget)
 			game.mousedown = true
 			game.mouseTarget = e.currentTarget
-			// game.cursorDominoTile = game.selectDominoTile($(this).attr('id'))
 			game.cursorDominoTile = game.selectDominoTile(e.currentTarget.id)
-			// game.cursorDominoTilelocTop = $(this).css('top')
 			game.cursorDominoTilelocTop = e.currentTarget.top
-			// game.cursorDominoTilelocLeft = $(this).css('left')
 			game.cursorDominoTilelocLeft = e.currentTarget.left
-			// game.rotateTile(e.target)
 			
 		})
 	})
