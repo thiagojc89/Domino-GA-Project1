@@ -294,7 +294,10 @@ function addListeners() {
 		// make this element draggable
 		elem.draggable=true
 
-		
+		// https://developer.mozilla.org/en-US/docs/Web/API/HTML_Drag_and_Drop_API/Drag_operations#draggableattribute
+		elem.addEventListener('dragstart', (event) => event.dataTransfer.setData('text/plain', 'This text may be dragged'))
+
+
 			
 		//Mouse DOWN listener
 		elem.addEventListener('mousedown',function(e) {
