@@ -56,8 +56,6 @@ const game = {
 	dominoesPlayer2Array: [],
 	dominoPile: [],
 	validPlay: false,
-	cursorXposition: null,
-	firstPlay: true,
 	guide: ["000","010","101","111","202","212","222"],
 	switchTurn: 'player1',
 	generateDominoesTiles(){
@@ -287,7 +285,6 @@ document.body.addEventListener('keypress', function (e) {
 document.querySelector("#image-start-game").addEventListener('click', ()=>game.startGame())
 
 function addListeners() {
-	// $(".dominoH , .dominoV ")
 	// document.querySelectorAll('.dominoV, .dominoH').forEach(elem=>{
 	document.querySelectorAll('.tile').forEach(elem=>{
 
@@ -301,9 +298,6 @@ function addListeners() {
 
 		})
 		
-
-
-			
 		//Mouse DOWN listener
 		elem.addEventListener('mousedown',function(e) {
 			game.mousedown = true
@@ -315,79 +309,36 @@ function addListeners() {
 		})
 	})
 	document.querySelector('#gameBoard').addEventListener('drop', (event) => {
+		console.log(event)
 		event.preventDefault()
 		if (event.target.id == "gameBoard") {
-		
-			game.mouseTarget.parentNode.removeChild(game.mouseTarget);
-			event.target.appendChild(game.mouseTarget);
+
+			// this returns position of the cursor on the page (where I drop the tile)
+			const cursorPosition = event.pageX
+			// this returns the position of the beggining of the gameBoard
+			const margin = event.target.offsetLeft
+			// this returns the size (width) of the gameBoard
+			const boardWidth = event.target.clientWidth
+
+			console.log('cursorPosition ', cursorPosition)
+			console.log('margin ', margin)
+			console.log('boardWidth ', boardWidth)
+			
+			if (cursorPosition - margin > (boardWidth / 2)) {
+	  			
+				game.mouseTarget.parentNode.removeChild(game.mouseTarget);
+				event.target.appendChild(game.mouseTarget);
+			}
+			else{
+				
+				game.mouseTarget.parentNode.removeChild(game.mouseTarget);
+				event.target.insertBefore(game.mouseTarget, event.target.querySelector('.tile'))
+				
+			}
 		}
-
-
+		game.changePlayer()
 	})
 
-	//Mouse UP listener
-	// .mouseup(function(event) {
-
-
-	// 	// this line returns to me the x position of the cursor on the page
-	// 	game.cursorXposition = event.originalEvent.pageX
-
-	// 	game.mousedown = false
-	// 	game.mouseTarget = null
-
-	//     /* Pull out only the snap targets that are "snapping": */
-	// 	const snappedArray = $(this).data('uiDraggable').snapElements
-	//     const snappedTo = $.map(snappedArray, function(element) {
-	//     	return element.snapping ? element.item : null //Conditional (ternary) operator
-	//     })
-	//     if (snappedTo.length !== 0){
-	//     	game.snappedDominoTile = game.selectDominoTile($(snappedTo).attr('id'))
-	// 		game.snappedDominoTilelocTop = $(this).css('top')
-	// 		game.snappedDominoTilelocLeft = $(this).css('left')
-	//         game.playValidate(this)
-	//     }
-	    
-	//     // $( this ).draggable( "option", "snap", false)
-	// })
-
-	// $( "#gameBoard" )
-	// .droppable()
-	// .droppable({
-	//   drop: function( event, ui ) {
-	  	
-	//   	// console.log(event)
-
-	//   	//this line returns the Width size of my droppable area.
-	//   	const droppableWidth = event.target.clientWidth
-	  	
-
-	//   	//this line returns the distance between the left side (0px) until the begining of the 
-	//   	// #gameBoard border.
-	//   	const margin = event.target.offsetLeft
-
-
-	//   	if (game.validPlay || game.firstPlay){
-
-	//   			// console.log(`margin : ${margin}`)
-	//   			// console.log(`game.cursorXposition : ${game.cursorXposition}`)
-	//   			// console.log(`droppableWidth : ${droppableWidth}`)
-	//   			// console.log(`droppableWidth /2 : ${droppableWidth /2}`)
-	//   			// console.log(`game.cursorXposition - margin : ${game.cursorXposition - margin}`)
-
-	//   		if (game.cursorXposition - margin > (droppableWidth /2)){
-	//   			$(ui.draggable).css('top','0px').css('left','0px').appendTo($('#gameBoard'))
-	//   		}
-	//   		else{
-	//   			$(ui.draggable).css('top','0px').css('left','0px').prependTo($('#gameBoard'))	
-	// 		}
-
-	// 		game.changePlayer()
-  
-	//   	}
-
-	//  	game.firstPlay = false
-	//   }
-	// })
 	function _func(e) {
 		if (game.dominoPile.length > 0) game.dominoPurchase(e.target.id)
 		else e.target.removeEventListener('click', _func)
