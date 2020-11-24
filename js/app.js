@@ -111,8 +111,8 @@ const game = {
 		}
 	},
 	startGame(){
-		const newGame = new Domino()
-		this.gameSet = newGame
+		
+		this.gameSet = new Domino()
 
 		this.generateDominoesTiles()
 		this.dealDominoes()
