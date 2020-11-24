@@ -272,14 +272,7 @@ document.body.addEventListener('keypress', function (e) {
 		}
 		if (e.key === "a"){
 			game.switchSide(game.mouseTarget,"180")
-		}
-		if (e.key === "w"){
-			game.switchSide(game.mouseTarget,"90")
-		}
-		if (e.key === "q"){
-			game.switchSide(game.mouseTarget,"270")
-		}
-		
+		} 
 	}
 })
 document.querySelector("#image-start-game").addEventListener('click', ()=>game.startGame())
