@@ -1,6 +1,16 @@
+//Tile Class
+class tile{
+	constructor(sideA,sideB){
+		this.sideA = sideA,
+		this.sideB = sideB,
+		this.double = sideA === sideB
+	}
+}
+
 //Domino Class
 class Domino {
 	constructor(){
+		this.dominoes = [],
 		this.dominoTiles = {
 			"66":{name:"Double Six", topValue:6, bottomValue:6, doubleValue:true},
 			"65":{name:"6 by 5", topValue:6, bottomValue:5, doubleValue:false},
@@ -105,13 +115,14 @@ const game = {
 
 				domino.classList.add('tile')
 
-
+				this.gameSet.dominoes.push(new tile(i,j))
 				this.dominoesArray.push(domino)
 			}
 		}
+		console.log(this.gameSet.dominoes)
 	},
 	startGame(){
-		
+
 		this.gameSet = new Domino()
 
 		this.generateDominoesTiles()
@@ -166,6 +177,8 @@ const game = {
 	selectDominoTile(idName) {
 		return this.gameSet.dominoTiles[idName]
 	},
+
+	// lets do this next
 	playValidate(element){
 		this.validPlay = this.checkMatch()
 		if (!this.validPlay){	
