@@ -1,11 +1,45 @@
 //Tile Class
 class tile{
-	constructor(name,element,sideA,sideB){
+	constructor(element,name,sideA,sideB){
 		this.name = name,
 		this.element = element,
 		this.sideA = sideA,
 		this.sideB = sideB,
 		this.double = sideA === sideB
+	}
+	rotateTile(element=this.element) {
+
+		if (element.classList.contains('dominoH')) {
+
+			element.querySelectorAll('.side-H').forEach(elem => {
+				elem.classList.remove('side-H')
+				elem.classList.add('side-V')
+
+				elem.childNodes.forEach(elem2 => {
+					elem2.classList.remove('side-H-dot')
+					elem2.classList.add('side-V-dot')
+				})
+			})
+			element.classList.remove('dominoH')
+			element.classList.add('dominoV')
+		}
+		else {
+			element.querySelectorAll('.side-V').forEach(elem => {
+				elem.classList.remove('side-V')
+				elem.classList.add('side-H')
+
+				elem.childNodes.forEach(elem2 => {
+					elem2.classList.remove('side-V-dot')
+					elem2.classList.add('side-H-dot')
+				})
+			})
+			element.classList.remove('dominoV')
+			element.classList.add('dominoH')
+		}
+
+	}
+	switchSide(angle) {
+		this.element.setAttribute('style', `transform: rotate(${angle}deg)`)
 	}
 }
 
@@ -32,9 +66,6 @@ const game = {
 			for (let j= i; j <= 6; j++){
 				
 				const domino = document.createElement('div')
-
-				// domino.setAttribute('id', `id${j}${i}`)
-				domino.dataset.tile = `id${j}${i}`
 				
 				domino.classList.add('dominoH')
 				
@@ -77,7 +108,8 @@ const game = {
 
 				domino.classList.add('tile')
 
-				this.dominoes.push(new tile(`tile${i}by${j}`, domino,i,j))
+				domino.dataset.tile = `tile${i}by${j}`
+				this.dominoes.push(new tile(domino, domino.dataset.tile, i, j))
 
 			}
 		}
@@ -114,6 +146,7 @@ const game = {
 				this.dominoes.splice(indexPile,1)
 			}
 		}
+		this.dominoes = [...this.dominoesPlayer1Array, ...this.dominoesPlayer2Array, ...this.dominoPile]
 	},
 	appendTotheScreen(){
 		for (let i = 0; i < 7; i+=1){
@@ -127,8 +160,10 @@ const game = {
 		}
 		document.querySelector('#dominoPile').setAttribute('style', 'display: none')	
 	},
-	selectDominoTile(tile) {
-		return this.dominoes.find((tile)=>tile.name===tile)
+	selectDominoTile(tileName) {
+		// console.log(tileName)
+		// console.log(this.dominoes)
+		return this.dominoes.find((tile)=>tile.name===tileName)
 	},
 
 	// lets do this next
@@ -148,40 +183,6 @@ const game = {
 			console.log("Match not Found")
 			return false
 		}
-	},
-	rotateTile(element){
-		
-		if (element.classList.contains('dominoH')){
-
-			element.querySelectorAll('.side-H').forEach(elem=>{
-				elem.classList.remove('side-H')
-				elem.classList.add('side-V')
-				
-				elem.childNodes.forEach(elem2=>{
-					elem2.classList.remove('side-H-dot')
-					elem2.classList.add('side-V-dot')
-				})
-			})
-			element.classList.remove('dominoH')
-			element.classList.add('dominoV')	
-		}
-		else {
-			element.querySelectorAll('.side-V').forEach(elem => {
-				elem.classList.remove('side-V')
-				elem.classList.add('side-H')
-
-				elem.childNodes.forEach(elem2 => {
-					elem2.classList.remove('side-V-dot')
-					elem2.classList.add('side-H-dot')
-				})
-			})
-			element.classList.remove('dominoV')
-			element.classList.add('dominoH')
-		}
-
-	},
-	switchSide(element,angle){
-		element.setAttribute('style', `transform: rotate(${angle}deg)`)
 	},
 	goBackToPreviousLoc(element,top,left){
 		element.setAttribute('style', `top: ${top}`)
@@ -231,13 +232,13 @@ document.body.addEventListener('keypress', function (e) {
 	
 	if (game.mousedown) {
 		if (e.key === "r"){
-			game.rotateTile(game.mouseTarget)
+			game.cursorDominoTile.rotateTile()
 		}
 		if (e.key === "s"){
-			game.switchSide(game.mouseTarget,"0")
+			game.cursorDominoTile.switchSide("0")
 		}
 		if (e.key === "a"){
-			game.switchSide(game.mouseTarget,"180")
+			game.cursorDominoTile.switchSide("180")
 		} 
 	}
 })
@@ -262,6 +263,7 @@ function addListeners() {
 			game.mousedown = true
 			game.mouseTarget = e.currentTarget
 			game.cursorDominoTile = game.selectDominoTile(e.currentTarget.dataset.tile)
+			console.log(game.cursorDominoTile)
 			game.cursorDominoTilelocTop = e.currentTarget.top
 			game.cursorDominoTilelocLeft = e.currentTarget.left
 			
