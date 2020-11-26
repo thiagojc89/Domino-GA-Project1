@@ -1,6 +1,7 @@
 //Tile Class
 class tile{
-	constructor(sideA,sideB){
+	constructor(name,sideA,sideB){
+		this.name = name,
 		this.sideA = sideA,
 		this.sideB = sideB,
 		this.double = sideA === sideB
@@ -10,37 +11,37 @@ class tile{
 //Domino Class
 class Domino {
 	constructor(){
-		this.dominoes = [],
-		this.dominoTiles = {
-			"66":{name:"Double Six", topValue:6, bottomValue:6, doubleValue:true},
-			"65":{name:"6 by 5", topValue:6, bottomValue:5, doubleValue:false},
-			"64":{name:"6 by 4", topValue:6, bottomValue:4, doubleValue:false},
-			"63":{name:"6 by 3", topValue:6, bottomValue:3, doubleValue:false},
-			"62":{name:"6 by 2", topValue:6, bottomValue:2, doubleValue:false},
-			"61":{name:"6 by 1", topValue:6, bottomValue:1, doubleValue:false},
-			"60":{name:"6 by 0", topValue:6, bottomValue:0, doubleValue:false},
-			"55":{name:"Double Five", topValue:5, bottomValue:5, doubleValue:true},
-			"54":{name:"5 by 4", topValue:5, bottomValue:4, doubleValue:false},
-			"53":{name:"5 by 3", topValue:5, bottomValue:3, doubleValue:false},
-			"52":{name:"5 by 2", topValue:5, bottomValue:2, doubleValue:false},
-			"51":{name:"5 by 1", topValue:5, bottomValue:1, doubleValue:false},
-			"50":{name:"5 by 0", topValue:5, bottomValue:0, doubleValue:false},
-			"44":{name:"Double Four", topValue:4, bottomValue:4, doubleValue:true},
-			"43":{name:"4 by 3", topValue:4, bottomValue:3, doubleValue:false},
-			"42":{name:"4 by 2", topValue:4, bottomValue:2, doubleValue:false},
-			"41":{name:"4 by 1", topValue:4, bottomValue:1, doubleValue:false},
-			"40":{name:"4 by 0", topValue:4, bottomValue:0, doubleValue:false},
-			"33":{name:"Double Three", topValue:3, bottomValue:3, doubleValue:true},
-			"32":{name:"3 by 2", topValue:3, bottomValue:2, doubleValue:false},
-			"31":{name:"3 by 1", topValue:3, bottomValue:1, doubleValue:false},
-			"30":{name:"3 by 0", topValue:3, bottomValue:0, doubleValue:false},
-			"22":{name:"Double Two", topValue:2, bottomValue:2, doubleValue:true},
-			"21":{name:"2 by 1", topValue:2, bottomValue:1, doubleValue:false},
-			"20":{name:"2 by 0", topValue:2, bottomValue:0, doubleValue:false},
-			"11":{name:"Double One", topValue:1, bottomValue:1, doubleValue:true},
-			"10":{name:"1 by 0", topValue:1, bottomValue:0, doubleValue:false},
-			"00":{name:"Double Zero", topValue:0, bottomValue:0, doubleValue:true}
-		}
+		this.dominoes = []
+		// this.dominoTiles = {
+		// 	"66":{name:"Double Six", sideA:6, sideB:6, doubleValue:true},
+		// 	"65":{name:"6 by 5", sideA:6, sideB:5, doubleValue:false},
+		// 	"64":{name:"6 by 4", sideA:6, sideB:4, doubleValue:false},
+		// 	"63":{name:"6 by 3", sideA:6, sideB:3, doubleValue:false},
+		// 	"62":{name:"6 by 2", sideA:6, sideB:2, doubleValue:false},
+		// 	"61":{name:"6 by 1", sideA:6, sideB:1, doubleValue:false},
+		// 	"60":{name:"6 by 0", sideA:6, sideB:0, doubleValue:false},
+		// 	"55":{name:"Double Five", sideA:5, sideB:5, doubleValue:true},
+		// 	"54":{name:"5 by 4", sideA:5, sideB:4, doubleValue:false},
+		// 	"53":{name:"5 by 3", sideA:5, sideB:3, doubleValue:false},
+		// 	"52":{name:"5 by 2", sideA:5, sideB:2, doubleValue:false},
+		// 	"51":{name:"5 by 1", sideA:5, sideB:1, doubleValue:false},
+		// 	"50":{name:"5 by 0", sideA:5, sideB:0, doubleValue:false},
+		// 	"44":{name:"Double Four", sideA:4, sideB:4, doubleValue:true},
+		// 	"43":{name:"4 by 3", sideA:4, sideB:3, doubleValue:false},
+		// 	"42":{name:"4 by 2", sideA:4, sideB:2, doubleValue:false},
+		// 	"41":{name:"4 by 1", sideA:4, sideB:1, doubleValue:false},
+		// 	"40":{name:"4 by 0", sideA:4, sideB:0, doubleValue:false},
+		// 	"33":{name:"Double Three", sideA:3, sideB:3, doubleValue:true},
+		// 	"32":{name:"3 by 2", sideA:3, sideB:2, doubleValue:false},
+		// 	"31":{name:"3 by 1", sideA:3, sideB:1, doubleValue:false},
+		// 	"30":{name:"3 by 0", sideA:3, sideB:0, doubleValue:false},
+		// 	"22":{name:"Double Two", sideA:2, sideB:2, doubleValue:true},
+		// 	"21":{name:"2 by 1", sideA:2, sideB:1, doubleValue:false},
+		// 	"20":{name:"2 by 0", sideA:2, sideB:0, doubleValue:false},
+		// 	"11":{name:"Double One", sideA:1, sideB:1, doubleValue:true},
+		// 	"10":{name:"1 by 0", sideA:1, sideB:0, doubleValue:false},
+		// 	"00":{name:"Double Zero", sideA:0, sideB:0, doubleValue:true}
+		// }
 	}
 }
 
@@ -73,7 +74,10 @@ const game = {
 			for (let j= i; j <= 6; j++){
 				
 				const domino = document.createElement('div')
-				domino.setAttribute('id', `id${j}${i}`)
+
+				// domino.setAttribute('id', `id${j}${i}`)
+				domino.dataset.tile = `id${j}${i}`
+				
 				domino.classList.add('dominoH')
 				
 				const sideA = document.createElement('div')
@@ -115,7 +119,7 @@ const game = {
 
 				domino.classList.add('tile')
 
-				this.gameSet.dominoes.push(new tile(i,j))
+				this.gameSet.dominoes.push(new tile(`id${j}${i}`,i,j))
 				this.dominoesArray.push(domino)
 			}
 		}
@@ -174,8 +178,8 @@ const game = {
 		}
 		document.querySelector('#dominoPile').setAttribute('style', 'display: none')	
 	},
-	selectDominoTile(idName) {
-		return this.gameSet.dominoTiles[idName]
+	selectDominoTile(tile) {
+		return this.gameSet.dominoes.find((tile)=>tile.name===tile)
 	},
 
 	// lets do this next
@@ -186,10 +190,10 @@ const game = {
 		}
 	},
 	checkMatch(){	
-		if (this.cursorDominoTile.topValue === this.snappedDominoTile.topValue ||
-			this.cursorDominoTile.topValue === this.snappedDominoTile.bottomValue||
-			this.cursorDominoTile.bottomValue === this.snappedDominoTile.topValue ||
-			this.cursorDominoTile.bottomValue === this.snappedDominoTile.bottomValue){
+		if (this.cursorDominoTile.sideA === this.snappedDominoTile.sideA ||
+			this.cursorDominoTile.sideA === this.snappedDominoTile.sideB||
+			this.cursorDominoTile.sideB === this.snappedDominoTile.sideA ||
+			this.cursorDominoTile.sideB === this.snappedDominoTile.sideB){
 			return true
 		}else{
 			console.log("Match not Found")
@@ -306,9 +310,10 @@ function addListeners() {
 		
 		//Mouse DOWN listener
 		elem.addEventListener('mousedown',function(e) {
+			console.log(e.currentTarget)
 			game.mousedown = true
 			game.mouseTarget = e.currentTarget
-			game.cursorDominoTile = game.selectDominoTile(e.currentTarget.id)
+			game.cursorDominoTile = game.selectDominoTile(e.currentTarget.dataset.tile)
 			game.cursorDominoTilelocTop = e.currentTarget.top
 			game.cursorDominoTilelocLeft = e.currentTarget.left
 			
