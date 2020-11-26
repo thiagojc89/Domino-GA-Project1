@@ -38,8 +38,8 @@ class tile{
 		}
 
 	}
-	switchSide(angle) {
-		this.element.setAttribute('style', `transform: rotate(${angle}deg)`)
+	switchSide(angle, element=this.element) {
+		element.setAttribute('style', `transform: rotate(${angle}deg)`)
 	}
 }
 
