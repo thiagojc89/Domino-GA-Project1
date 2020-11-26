@@ -23,7 +23,7 @@ const game = {
 	//cursorDominoTilelocTop is the top locatio of the domino on the screen
 	//cursorDominoTilelocLeft is the Left locatio of the domino on the Scree
 	//The same aplies to the domino snapped (mouse up && snapElement diferrent than 0)
-	dominoes: null,
+	dominoes: [],
 	cursorDominoTile: null,
 	cursorDominoTilelocTop: null,
 	cursorDominoTilelocLeft: null,
@@ -93,12 +93,8 @@ const game = {
 				this.dominoesArray.push(domino)
 			}
 		}
-		console.log(this.dominoes)
 	},
 	startGame(){
-
-		// this.dominoes = new Domino()
-
 		this.generateDominoesTiles()
 		this.dealDominoes()
 		this.appendTotheScreen()
@@ -107,12 +103,6 @@ const game = {
 		document.querySelector('#instruction').setAttribute('style', 'display: none')
 		document.querySelector('#dominoPlayer2').setAttribute('style', 'background-color: gray')
 		document.querySelector('#dominoPlayer2').childNodes.forEach(elem => elem.setAttribute('style', 'visibility: hidden'))
-
-
-
-		// document.querySelectorAll('#dominoPlayer2 div').forEach(div=>{
-		// 	div.setAttribute('style', 'visibility: hidden')
-		// })
 
 		addListeners()
 
@@ -149,7 +139,7 @@ const game = {
 		document.querySelector('#dominoPile').setAttribute('style', 'display: none')	
 	},
 	selectDominoTile(tile) {
-		return this.dominoes.dominoes.find((tile)=>tile.name===tile)
+		return this.dominoes.find((tile)=>tile.name===tile)
 	},
 
 	// lets do this next
@@ -280,7 +270,6 @@ function addListeners() {
 		
 		//Mouse DOWN listener
 		elem.addEventListener('mousedown',function(e) {
-			console.log(e.currentTarget)
 			game.mousedown = true
 			game.mouseTarget = e.currentTarget
 			game.cursorDominoTile = game.selectDominoTile(e.currentTarget.dataset.tile)
@@ -290,7 +279,6 @@ function addListeners() {
 		})
 	})
 	document.querySelector('#gameBoard').addEventListener('drop', (event) => {
-		console.log(event)
 		event.preventDefault()
 		if (event.target.id == "gameBoard") {
 
@@ -300,11 +288,7 @@ function addListeners() {
 			const margin = event.target.offsetLeft
 			// this returns the size (width) of the gameBoard
 			const boardWidth = event.target.clientWidth
-
-			console.log('cursorPosition ', cursorPosition)
-			console.log('margin ', margin)
-			console.log('boardWidth ', boardWidth)
-			
+	
 			if (cursorPosition - margin > (boardWidth / 2)) {
 	  			
 				game.mouseTarget.parentNode.removeChild(game.mouseTarget);
