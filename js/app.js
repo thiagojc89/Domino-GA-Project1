@@ -1,29 +1,21 @@
 //Tile Class
 class tile{
-	constructor(name,sideA,sideB){
+	constructor(name,element,sideA,sideB){
 		this.name = name,
+		this.element = element,
 		this.sideA = sideA,
 		this.sideB = sideB,
 		this.double = sideA === sideB
 	}
 }
 
-// //Domino Class
-// class Domino {
-// 	constructor(){
-// 		this.dominoes = []
-// 	}
-// }
 
-//game Object, all the moves and validaton of the games will be set here.
 const game = {
 
-	//declaring a few variabes to use inside of the game object.
-	//cursoDominoTile is the domino the user ar dragging (mouse down)
-	//cursorDominoTilelocTop is the top locatio of the domino on the screen
-	//cursorDominoTilelocLeft is the Left locatio of the domino on the Scree
-	//The same aplies to the domino snapped (mouse up && snapElement diferrent than 0)
 	dominoes: [],
+	dominoesPlayer1Array: [],
+	dominoesPlayer2Array: [],
+	dominoPile: [],
 	cursorDominoTile: null,
 	cursorDominoTilelocTop: null,
 	cursorDominoTilelocLeft: null,
@@ -32,10 +24,6 @@ const game = {
 	snappedDominoTileLocLeft: null,
 	mouseDown: false,
 	mouseTarget: null,
-	dominoesArray: [],
-	dominoesPlayer1Array: [],
-	dominoesPlayer2Array: [],
-	dominoPile: [],
 	validPlay: false,
 	guide: ["000","010","101","111","202","212","222"],
 	switchTurn: 'player1',
@@ -89,10 +77,11 @@ const game = {
 
 				domino.classList.add('tile')
 
-				this.dominoes.push(new tile(`id${j}${i}`,i,j))
-				this.dominoesArray.push(domino)
+				this.dominoes.push(new tile(`tile${i}by${j}`, domino,i,j))
+
 			}
 		}
+		console.log(this.dominoes)
 	},
 	startGame(){
 		this.generateDominoesTiles()
@@ -108,33 +97,33 @@ const game = {
 
 	},	
 	dealDominoes(){
-		const getRandom = () => Math.floor(Math.random() * this.dominoesArray.length)
+		const getRandom = () => Math.floor(Math.random() * this.dominoes.length)
 		for (let i = 0; i < 21; i+=1){
 			if (i < 7){
 				const indexPlayer1 = getRandom()
-				this.dominoesPlayer1Array.push(this.dominoesArray[indexPlayer1])
-				this.dominoesArray.splice(indexPlayer1,1)
+				this.dominoesPlayer1Array.push(this.dominoes[indexPlayer1])
+				this.dominoes.splice(indexPlayer1,1)
 				
 				const indexPlayer2 = getRandom()
-				this.dominoesPlayer2Array.push(this.dominoesArray[indexPlayer2])
-				this.dominoesArray.splice(indexPlayer2,1)
+				this.dominoesPlayer2Array.push(this.dominoes[indexPlayer2])
+				this.dominoes.splice(indexPlayer2,1)
 			}
 			else {
 				const indexPile = getRandom()
-				this.dominoPile.push(this.dominoesArray[indexPile])
-				this.dominoesArray.splice(indexPile,1)
+				this.dominoPile.push(this.dominoes[indexPile])
+				this.dominoes.splice(indexPile,1)
 			}
 		}
 	},
 	appendTotheScreen(){
 		for (let i = 0; i < 7; i+=1){
-			document.querySelector('#dominoPlayer1').appendChild(this.dominoesPlayer1Array[i])		
+			document.querySelector('#dominoPlayer1').appendChild(this.dominoesPlayer1Array[i].element)		
 		}	
 		for (let i = 0; i < 7; i+=1){	
-			document.querySelector('#dominoPlayer2').appendChild(this.dominoesPlayer2Array[i])
+			document.querySelector('#dominoPlayer2').appendChild(this.dominoesPlayer2Array[i].element)
 		}	
 		for (let i = 0; i < 14; i+=1){
-			document.querySelector('#dominoPile').appendChild(this.dominoPile[i])
+			document.querySelector('#dominoPile').appendChild(this.dominoPile[i].element)
 		}
 		document.querySelector('#dominoPile').setAttribute('style', 'display: none')	
 	},
