@@ -251,8 +251,8 @@ function addListeners() {
 			game.mousedown = true
 			game.mouseTarget = e.currentTarget
 			game.cursorDominoTile = game.selectDominoTile(e.currentTarget.dataset.tile)
-			game.cursorDominoTilelocTop = e.currentTarget.top
-	game.left = e.currentTarget.left
+			game.top = e.currentTarget.top
+			game.left = e.currentTarget.left
 			
 		})
 	})
