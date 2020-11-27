@@ -271,6 +271,7 @@ function addListeners() {
 			if (!event.target.querySelector('.tile')){
 				game.mouseTarget.parentNode.removeChild(game.mouseTarget);
 				event.target.appendChild(game.mouseTarget);
+				game.changePlayer()
 			}
 			// verify o which side to append or preppend tile
 			else if (cursorPosition - margin > (boardWidth / 2)) {
@@ -281,6 +282,7 @@ function addListeners() {
 				if (game.checkMatch(elem1, elem2)){
 					game.mouseTarget.parentNode.removeChild(game.mouseTarget);
 					event.target.appendChild(game.mouseTarget);
+					game.changePlayer()
 				}
 				else{	
 					game.goBackToPreviousLoc()
@@ -294,13 +296,13 @@ function addListeners() {
 
 					game.mouseTarget.parentNode.removeChild(game.mouseTarget);
 					event.target.insertBefore(game.mouseTarget, event.target.querySelector('.tile'))
+					game.changePlayer()
 				}
 				else{
 					game.goBackToPreviousLoc()
 				}
 			}
 		}
-		game.changePlayer()
 	})
 
 	function _func(e) {
