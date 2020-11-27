@@ -51,11 +51,8 @@ const game = {
 	dominoesPlayer2Array: [],
 	dominoPile: [],
 	cursorDominoTile: null,
-	cursorDominoTilelocTop: null,
-	cursorDominoTilelocLeft: null,
-	snappedDominoTile: null,
-	snappedDominoTileLocTop: null,
-	snappedDominoTileLocLeft: null,
+	top: null,
+	left: null,
 	mouseDown: false,
 	mouseTarget: null,
 	guide: ["000","010","101","111","202","212","222"],
@@ -112,7 +109,6 @@ const game = {
 
 			}
 		}
-		console.log(this.dominoes)
 	},
 	startGame(){
 		this.generateDominoesTiles()
@@ -176,7 +172,7 @@ const game = {
 			return false
 		}
 	},
-	goBackToPreviousLoc(element,top,left){
+	goBackToPreviousLoc(element=this.mouseTarget ,top=this.top,left=this.left){
 		element.setAttribute('style', `top: ${top}`)
 		element.setAttribute('style', `top: ${left}`)
 	},
@@ -256,7 +252,7 @@ function addListeners() {
 			game.mouseTarget = e.currentTarget
 			game.cursorDominoTile = game.selectDominoTile(e.currentTarget.dataset.tile)
 			game.cursorDominoTilelocTop = e.currentTarget.top
-			game.cursorDominoTilelocLeft = e.currentTarget.left
+	game.left = e.currentTarget.left
 			
 		})
 	})
@@ -270,37 +266,38 @@ function addListeners() {
 			const margin = event.target.offsetLeft
 			// this returns the size (width) of the gameBoard
 			const boardWidth = event.target.clientWidth
-			console.log(event.target.querySelector('.tile'))
+
+			// verify if is the first play
 			if (!event.target.querySelector('.tile')){
 				game.mouseTarget.parentNode.removeChild(game.mouseTarget);
 				event.target.appendChild(game.mouseTarget);
 			}
+			// verify o which side to append or preppend tile
 			else if (cursorPosition - margin > (boardWidth / 2)) {
-				console.log('append on the RIGHT')
 				// need to check first if I can append here
-				console.log(game.dominoes)
 				const elem1 = game.dominoes.find(tile=> tile.name === game.mouseTarget.dataset.tile)
-				// const elem1 = game.mouseTarget
 				const elem2 = game.dominoes.find(tile => tile.name === event.target.lastChild.dataset.tile)
 
-				console.log('target > ', event.target)
-				console.log('elem1 > ', elem1)
-				console.log('elem2 > ', elem2)
 				if (game.checkMatch(elem1, elem2)){
 					game.mouseTarget.parentNode.removeChild(game.mouseTarget);
 					event.target.appendChild(game.mouseTarget);
 				}
-				else{
-					
-					game.goBackToPreviousLoc(game.mouseTarget, game.cursorDominoTilelocTop, game.cursorDominoTilelocLeft)
+				else{	
+					game.goBackToPreviousLoc()
 				}
 			}
 			else{
-				console.log('append on the LEFT')
+				const elem1 = game.dominoes.find(tile => tile.name === game.mouseTarget.dataset.tile)
+				const elem2 = game.dominoes.find(tile => tile.name === event.target.querySelector('.tile').dataset.tile)
 				
-				game.mouseTarget.parentNode.removeChild(game.mouseTarget);
-				event.target.insertBefore(game.mouseTarget, event.target.querySelector('.tile'))
-				
+				if (game.checkMatch(elem1, elem2)) {
+
+					game.mouseTarget.parentNode.removeChild(game.mouseTarget);
+					event.target.insertBefore(game.mouseTarget, event.target.querySelector('.tile'))
+				}
+				else{
+					game.goBackToPreviousLoc()
+				}
 			}
 		}
 		game.changePlayer()
@@ -318,7 +315,7 @@ function addListeners() {
 	})
 	
 }
-game.startGame()
+// game.startGame()
 // debug listenter
 // document.addEventListener('click', e => console.log(e.target))
 
