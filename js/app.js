@@ -155,10 +155,6 @@ const game = {
 		}
 		document.querySelector('#dominoPile').setAttribute('style', 'display: none')	
 	},
-	selectDominoTile(tileName) {
-
-		return this.dominoes.find((tile)=>tile.name===tileName)
-	},
 	checkMatch(element1, element2){	
 		if (element1.sideA === element2.sideA ||
 			element1.sideA === element2.sideB ||
@@ -233,7 +229,6 @@ document.body.addEventListener('keypress', function (e) {
 document.querySelector("#image-start-game").addEventListener('click', ()=>game.startGame())
 
 function addListeners() {
-	// document.querySelectorAll('.dominoV, .dominoH').forEach(elem=>{
 	document.querySelectorAll('.tile').forEach(elem=>{
 
 		// make this element draggable
@@ -242,15 +237,13 @@ function addListeners() {
 		// https://developer.mozilla.org/en-US/docs/Web/API/HTML_Drag_and_Drop_API/Drag_operations#draggableattribute
 		elem.addEventListener('dragstart', (event) => {
 			event.dataTransfer.setData('text/plain', 'This text may be dragged')
-			// event.dataTransfer.effectAllowed = "copy";
-
 		})
 		
 		//Mouse DOWN listener
 		elem.addEventListener('mousedown',function(e) {
 			game.mousedown = true
 			game.mouseTarget = e.currentTarget
-			game.cursorDominoTile = game.selectDominoTile(e.currentTarget.dataset.tile)
+			game.cursorDominoTile = game.dominoes.find((tile) => tile.name === e.currentTarget.dataset.tile)
 			game.top = e.currentTarget.top
 			game.left = e.currentTarget.left
 			
