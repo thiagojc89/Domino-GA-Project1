@@ -173,10 +173,13 @@ const game = {
 	dominoPurchase(id){
 		const rand = Math.floor(Math.random() * this.dominoPile.length )
 		if (id === 'player1DominoGrid'){
-			document.querySelector('#dominoPlayer1').appendChild(this.dominoPile[rand])		
+			console.log(this.dominoPile)
+			console.log(rand)
+			console.log(this.dominoPile[rand])
+			document.querySelector('#dominoPlayer1').appendChild(this.dominoPile[rand].element)		
 		}
 		if (id === 'player2DominoGrid'){
-			document.querySelector('#dominoPlayer2').appendChild(this.dominoPile[rand])
+			document.querySelector('#dominoPlayer2').appendChild(this.dominoPile[rand].element)
 		}
 		this.dominoPile.splice(rand,1)
 		if (this.dominoPile.length === 0){
