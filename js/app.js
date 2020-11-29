@@ -9,6 +9,7 @@ class tile{
 	}
 	rotateTile(element=this.element) {
 
+		console.log(element)
 		if (element.classList.contains('dominoH')) {
 
 			element.querySelectorAll('.side-H').forEach(elem => {
@@ -159,12 +160,9 @@ const game = {
 		if (element1.sideA === element2.sideA ||
 			element1.sideA === element2.sideB ||
 			element1.sideB === element2.sideA ||
-			element1.sideB === element2.sideB){
-			
-			console.log('find match')
+			element1.sideB === element2.sideB){	
 			return true
 		}else{
-			console.log('match not found')
 			return false
 		}
 	},
@@ -264,6 +262,7 @@ function addListeners() {
 			if (!event.target.querySelector('.tile')){
 				game.mouseTarget.parentNode.removeChild(game.mouseTarget);
 				event.target.appendChild(game.mouseTarget);
+				if (game.cursorDominoTile.double) game.cursorDominoTile.rotateTile()
 				game.changePlayer()
 			}
 			// verify o which side to append or preppend tile
@@ -275,6 +274,7 @@ function addListeners() {
 				if (game.checkMatch(elem1, elem2)){
 					game.mouseTarget.parentNode.removeChild(game.mouseTarget);
 					event.target.appendChild(game.mouseTarget);
+					if (game.cursorDominoTile.double) game.cursorDominoTile.rotateTile()
 					game.changePlayer()
 				}
 				else{	
@@ -289,6 +289,7 @@ function addListeners() {
 
 					game.mouseTarget.parentNode.removeChild(game.mouseTarget);
 					event.target.insertBefore(game.mouseTarget, event.target.querySelector('.tile'))
+					if (game.cursorDominoTile.double) game.cursorDominoTile.rotateTile()
 					game.changePlayer()
 				}
 				else{
