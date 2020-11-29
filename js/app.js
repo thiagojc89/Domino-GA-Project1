@@ -9,7 +9,6 @@ class tile{
 	}
 	rotateTile(element=this.element) {
 
-		console.log(element)
 		if (element.classList.contains('dominoH')) {
 
 			element.querySelectorAll('.side-H').forEach(elem => {
@@ -106,7 +105,10 @@ const game = {
 				domino.classList.add('tile')
 
 				domino.dataset.tile = `tile${i}by${j}`
-				this.dominoes.push(new tile(domino, domino.dataset.tile, i, j))
+				const newTile = new tile(domino, domino.dataset.tile, i, j)
+				newTile.rotateTile()
+				console.log(newTile)
+				this.dominoes.push(newTile)
 
 			}
 		}
@@ -173,9 +175,6 @@ const game = {
 	dominoPurchase(id){
 		const rand = Math.floor(Math.random() * this.dominoPile.length )
 		if (id === 'player1DominoGrid'){
-			console.log(this.dominoPile)
-			console.log(rand)
-			console.log(this.dominoPile[rand])
 			document.querySelector('#dominoPlayer1').appendChild(this.dominoPile[rand].element)		
 		}
 		if (id === 'player2DominoGrid'){
