@@ -5,7 +5,9 @@ class tile{
 		this.element = element,
 		this.sideA = sideA,
 		this.sideB = sideB,
-		this.double = sideA === sideB
+		this.double = sideA === sideB,
+		this.boardSide = null,
+		this.tilted = null
 	}
 	rotateTile(element=this.element) {
 
@@ -276,6 +278,8 @@ function addListeners() {
 				if (game.checkMatch(elem1, elem2)){
 					game.mouseTarget.parentNode.removeChild(game.mouseTarget);
 					event.target.appendChild(game.mouseTarget);
+
+					game.cursorDominoTile.boardSide = 'right'
 					if (game.cursorDominoTile.double) game.cursorDominoTile.rotateTile()
 					game.changePlayer()
 				}
@@ -288,9 +292,11 @@ function addListeners() {
 				const elem2 = game.dominoes.find(tile => tile.name === event.target.querySelector('.tile').dataset.tile)
 				
 				if (game.checkMatch(elem1, elem2)) {
-
+					
 					game.mouseTarget.parentNode.removeChild(game.mouseTarget);
 					event.target.insertBefore(game.mouseTarget, event.target.querySelector('.tile'))
+					
+					game.cursorDominoTile.boardSide = 'left'
 					if (game.cursorDominoTile.double) game.cursorDominoTile.rotateTile()
 					game.changePlayer()
 				}
@@ -298,6 +304,7 @@ function addListeners() {
 					game.goBackToPreviousLoc()
 				}
 			}
+			console.log(game.cursorDominoTile)
 		}
 	})
 
