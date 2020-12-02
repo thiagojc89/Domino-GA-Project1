@@ -65,15 +65,15 @@ const game = {
 				
 				const domino = document.createElement('div')
 				
-				domino.classList.add('dominoH')
+				domino.classList.add('dominoV')
 				
 				const sideA = document.createElement('div')
-				sideA.classList.add('side-H')
+				sideA.classList.add('side-V')
 
 				for (let x = 0; x < 3; x++){
 
 					const div = document.createElement('div')
-					div.classList.add('side-H-dot')
+					div.classList.add('side-V-dot')
 		 
 					for (let y = 0; y < parseInt(this.guide[i][x]); y++){
 						
@@ -87,12 +87,12 @@ const game = {
 				domino.appendChild(sideA)				
 
 				const sideB = document.createElement('div')
-				sideB.classList.add('side-H')
+				sideB.classList.add('side-V')
 
 				for (let x = 0; x < 3; x++){
 
 					const div = document.createElement('div')
-					div.classList.add('side-H-dot')
+					div.classList.add('side-V-dot')
 
 					for (let y = 0; y < parseInt(this.guide[j][x]); y++){
 						
@@ -108,8 +108,6 @@ const game = {
 
 				domino.dataset.tile = `tile${i}by${j}`
 				const newTile = new tile(domino, domino.dataset.tile, i, j)
-				newTile.rotateTile()
-				console.log(newTile)
 				this.dominoes.push(newTile)
 
 			}
@@ -266,7 +264,7 @@ function addListeners() {
 			if (!event.target.querySelector('.tile')){
 				game.mouseTarget.parentNode.removeChild(game.mouseTarget);
 				event.target.appendChild(game.mouseTarget);
-				if (game.cursorDominoTile.double) game.cursorDominoTile.rotateTile()
+				if (!game.cursorDominoTile.double) game.cursorDominoTile.rotateTile()
 				game.changePlayer()
 			}
 			// verify o which side to append or preppend tile
@@ -280,7 +278,7 @@ function addListeners() {
 					event.target.appendChild(game.mouseTarget);
 
 					game.cursorDominoTile.boardSide = 'right'
-					if (game.cursorDominoTile.double) game.cursorDominoTile.rotateTile()
+					if (!game.cursorDominoTile.double) game.cursorDominoTile.rotateTile()
 					game.changePlayer()
 				}
 				else{	
@@ -297,14 +295,14 @@ function addListeners() {
 					event.target.insertBefore(game.mouseTarget, event.target.querySelector('.tile'))
 					
 					game.cursorDominoTile.boardSide = 'left'
-					if (game.cursorDominoTile.double) game.cursorDominoTile.rotateTile()
+					if (!game.cursorDominoTile.double) game.cursorDominoTile.rotateTile()
 					game.changePlayer()
 				}
 				else{
 					game.goBackToPreviousLoc()
 				}
 			}
-			console.log(game.cursorDominoTile)
+			
 		}
 	})
 
@@ -320,7 +318,7 @@ function addListeners() {
 	})
 	
 }
-// game.startGame()
+game.startGame()
 // debug listenter
 // document.addEventListener('click', e => console.log(e.target))
 
