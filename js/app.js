@@ -276,10 +276,13 @@ function addListeners() {
 
 			// verify if is the first play
 			if (!event.target.querySelector('.tile')) {
-				game.mouseTarget.parentNode.removeChild(game.mouseTarget);
-				event.target.appendChild(game.mouseTarget);
-				if (!game.cursorDominoTile.double) game.cursorDominoTile.rotateTile()
-				game.changePlayer()
+
+				if (game.cursorDominoTile.double){
+					game.mouseTarget.parentNode.removeChild(game.mouseTarget);
+					event.target.appendChild(game.mouseTarget);
+					if (!game.cursorDominoTile.double) game.cursorDominoTile.rotateTile()
+					game.changePlayer()
+				}
 			}
 			// verify o which side to append or preppend tile
 			else if (cursorPosition - margin > (boardWidth / 2)) {
@@ -295,9 +298,9 @@ function addListeners() {
 					if (!game.cursorDominoTile.double) game.cursorDominoTile.rotateTile()
 					game.changePlayer()
 				}
-				else {
-					game.goBackToPreviousLoc()
-				}
+				// else {
+					// game.goBackToPreviousLoc()
+				// }
 			}
 			else {
 				const elem1 = game.dominoes.find(tile => tile.name === game.mouseTarget.dataset.tile)
@@ -312,9 +315,9 @@ function addListeners() {
 					if (!game.cursorDominoTile.double) game.cursorDominoTile.rotateTile()
 					game.changePlayer()
 				}
-				else {
-					game.goBackToPreviousLoc()
-				}
+				// else {
+					// game.goBackToPreviousLoc()
+				// }
 			}
 
 		}
