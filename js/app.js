@@ -182,10 +182,6 @@ const game = {
 				return false
 		}
 	},
-	goBackToPreviousLoc(element = this.mouseTarget, top = this.top, left = this.left) {
-		element.setAttribute('style', `top: ${top}`)
-		element.setAttribute('style', `top: ${left}`)
-	},
 	dominoPurchase(id) {
 		const rand = Math.floor(Math.random() * this.dominoPile.length)
 		if (id === 'player1DominoGrid') {
@@ -298,9 +294,6 @@ function addListeners() {
 					if (!game.cursorDominoTile.double) game.cursorDominoTile.rotateTile()
 					game.changePlayer()
 				}
-				// else {
-					// game.goBackToPreviousLoc()
-				// }
 			}
 			else {
 				const elem1 = game.dominoes.find(tile => tile.name === game.mouseTarget.dataset.tile)
@@ -315,9 +308,6 @@ function addListeners() {
 					if (!game.cursorDominoTile.double) game.cursorDominoTile.rotateTile()
 					game.changePlayer()
 				}
-				// else {
-					// game.goBackToPreviousLoc()
-				// }
 			}
 
 		}
