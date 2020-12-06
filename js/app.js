@@ -309,7 +309,6 @@ function addListeners() {
 					game.changePlayer()
 				}
 			}
-
 		}
 	})
 
