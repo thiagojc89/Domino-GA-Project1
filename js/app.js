@@ -159,25 +159,82 @@ const game = {
 		document.querySelector('#dominoPile').setAttribute('style', 'display: none')
 	},
 	checkMatch(element1, element2) {
-		console.log("elem1", element1)
-		console.log("elem2", element2)
+		// console.log("elem1", element1)
+		// console.log("elem2", element2)
 		switch (true) {
 			case element1.sideA[0] === element2.sideA[0] && element2.sideA[1]:
 				element1.sideA[1] = false
 				element2.sideA[1] = false
-				return true
+				// element1.rotateTile()
+				return [true, 'AA']
 			case element1.sideA[0] === element2.sideB[0] && element2.sideB[1]:
 				element1.sideA[1] = false
 				element2.sideB[1] = false
-				return true
+				// element1.rotateTile()
+				return [true, 'AB']
 			case element1.sideB[0] === element2.sideA[0] && element2.sideA[1]:
 				element1.sideB[1] = false
 				element2.sideA[1] = false
-				return true
+				// element1.rotateTile()
+				return [true, 'BA']
 			case element1.sideB[0] === element2.sideB[0] && element2.sideB[1]:
 				element1.sideB[1] = false
 				element2.sideB[1] = false
-				return true
+				// element1.rotateTile()
+				return [true, 'BB']
+			default:
+				return false
+		}
+	},
+	fixRotation(element, cordinates) {
+		switch (true) {
+			case cordinates === 'L-AA':
+				console.log("L-AA")
+				// element1.rotateTile()
+				element.rotateTile()
+				element.switchSide("180")
+				break
+			case cordinates === 'L-AB':
+				console.log("L-AB")
+				// element1.rotateTile()
+				element.rotateTile()
+				element.switchSide("180")
+				break
+			case cordinates === 'L-BA':
+				console.log("L-BA")
+				// element1.rotateTile()
+				element.rotateTile()
+				// element.switchSide("180")
+				break
+			case cordinates === 'L-BB':
+				console.log("L-BB")
+				// element1.rotateTile()
+				element.rotateTile()
+				break
+			case cordinates === 'R-AA':
+				console.log("R-AA")
+				// element1.rotateTile()
+				element.rotateTile()
+				break
+			case cordinates === 'R-AB':
+				console.log("R-AB")
+				// element1.rotateTile()
+				element.rotateTile()
+				element.switchSide("180")
+				break
+			case cordinates === 'R-BA':
+				console.log("R-BA")
+				// element1.rotateTile()
+				element.rotateTile()
+				element.switchSide("180")
+
+				break
+			case cordinates === 'R-BB':
+				console.log("R-BB")
+				// element1.rotateTile()
+				element.rotateTile()
+				element.switchSide("180")
+				break
 			default:
 				return false
 		}
@@ -286,12 +343,17 @@ function addListeners() {
 				const elem1 = game.dominoes.find(tile => tile.name === game.mouseTarget.dataset.tile)
 				const elem2 = game.dominoes.find(tile => tile.name === event.target.lastChild.dataset.tile)
 
-				if (game.checkMatch(elem1, elem2)) {
+				const [foundMatch, match] = game.checkMatch(elem1, elem2)
+
+				if (foundMatch) {
 					game.mouseTarget.parentNode.removeChild(game.mouseTarget);
 					event.target.appendChild(game.mouseTarget);
+					
 
 					game.cursorDominoTile.boardSide = 'right'
-					if (!game.cursorDominoTile.double) game.cursorDominoTile.rotateTile()
+					// if (!game.cursorDominoTile.double) game.cursorDominoTile.rotateTile()
+					game.fixRotation(elem1, "R-"+match)
+
 					game.changePlayer()
 				}
 			}
@@ -299,13 +361,16 @@ function addListeners() {
 				const elem1 = game.dominoes.find(tile => tile.name === game.mouseTarget.dataset.tile)
 				const elem2 = game.dominoes.find(tile => tile.name === event.target.querySelector('.tile').dataset.tile)
 
-				if (game.checkMatch(elem1, elem2)) {
+				const [foundMatch, match] = game.checkMatch(elem1, elem2)
+
+				if (foundMatch) {
 
 					game.mouseTarget.parentNode.removeChild(game.mouseTarget);
 					event.target.insertBefore(game.mouseTarget, event.target.querySelector('.tile'))
 
 					game.cursorDominoTile.boardSide = 'left'
-					if (!game.cursorDominoTile.double) game.cursorDominoTile.rotateTile()
+					// if (!game.cursorDominoTile.double) game.cursorDominoTile.rotateTile()
+					game.fixRotation(elem1, "L-"+match)
 					game.changePlayer()
 				}
 			}
