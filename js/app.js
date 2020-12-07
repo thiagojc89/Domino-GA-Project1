@@ -190,48 +190,38 @@ const game = {
 		switch (true) {
 			case cordinates === 'L-AA':
 				console.log("L-AA")
-				// element1.rotateTile()
 				element.rotateTile()
 				element.switchSide("180")
 				break
 			case cordinates === 'L-AB':
 				console.log("L-AB")
-				// element1.rotateTile()
 				element.rotateTile()
 				element.switchSide("180")
 				break
 			case cordinates === 'L-BA':
 				console.log("L-BA")
-				// element1.rotateTile()
 				element.rotateTile()
-				// element.switchSide("180")
 				break
 			case cordinates === 'L-BB':
 				console.log("L-BB")
-				// element1.rotateTile()
 				element.rotateTile()
 				break
 			case cordinates === 'R-AA':
 				console.log("R-AA")
-				// element1.rotateTile()
 				element.rotateTile()
 				break
 			case cordinates === 'R-AB':
 				console.log("R-AB")
-				// element1.rotateTile()
 				element.rotateTile()
-				element.switchSide("180")
 				break
 			case cordinates === 'R-BA':
 				console.log("R-BA")
-				// element1.rotateTile()
 				element.rotateTile()
 				element.switchSide("180")
 
 				break
 			case cordinates === 'R-BB':
 				console.log("R-BB")
-				// element1.rotateTile()
 				element.rotateTile()
 				element.switchSide("180")
 				break
@@ -350,9 +340,8 @@ function addListeners() {
 					event.target.appendChild(game.mouseTarget);
 					
 
-					game.cursorDominoTile.boardSide = 'right'
-					// if (!game.cursorDominoTile.double) game.cursorDominoTile.rotateTile()
-					game.fixRotation(elem1, "R-"+match)
+					elem1.boardSide = 'right'
+					if (!elem1.double) game.fixRotation(elem1, "R-"+match)
 
 					game.changePlayer()
 				}
@@ -368,9 +357,8 @@ function addListeners() {
 					game.mouseTarget.parentNode.removeChild(game.mouseTarget);
 					event.target.insertBefore(game.mouseTarget, event.target.querySelector('.tile'))
 
-					game.cursorDominoTile.boardSide = 'left'
-					// if (!game.cursorDominoTile.double) game.cursorDominoTile.rotateTile()
-					game.fixRotation(elem1, "L-"+match)
+					elem1.boardSide = 'left'
+					if (!elem1.double) game.fixRotation(elem1, "L-"+match)
 					game.changePlayer()
 				}
 			}
