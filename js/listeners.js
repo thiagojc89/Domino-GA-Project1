@@ -1,18 +1,4 @@
 // listeners
-document.body.addEventListener('keypress', function (e) {
-
-	if (game.mousedown) {
-		if (e.key === "r") {
-			game.cursorDominoTile.rotateTile()
-		}
-		if (e.key === "s") {
-			game.cursorDominoTile.switchSide("0")
-		}
-		if (e.key === "a") {
-			game.cursorDominoTile.switchSide("180")
-		}
-	}
-})
 document.querySelector("#image-start-game").addEventListener('click', () => {
 	document.querySelector('#image-start-game').setAttribute('style', 'display: none')
 	document.querySelector('#instruction').setAttribute('style', 'display: none')
@@ -44,7 +30,6 @@ function addListeners() {
 		})
 	})
 	document.querySelector('#gameBoard').addEventListener('drop', (event) => {
-		event.preventDefault()
 		if (event.target.id == "gameBoard") {
 
 			// this returns position of the cursor on the page (where I drop the tile)
@@ -61,43 +46,52 @@ function addListeners() {
 					game.mouseTarget.parentNode.removeChild(game.mouseTarget);
 					event.target.appendChild(game.mouseTarget);
 					if (!game.cursorDominoTile.double) game.cursorDominoTile.rotateTile()
-					game.changePlayer()
+					game.removeTileFromPlayer()
+
 				}
 			}
-			// verify o which side to append or preppend tile
+
+			// verify which side to append or preppend tile
 			else if (cursorPosition - margin > (boardWidth / 2)) {
 				// need to check first if I can append here
-				const elem1 = game.dominoes.find(tile => tile.name === game.mouseTarget.dataset.tile)
-				const elem2 = game.dominoes.find(tile => tile.name === event.target.lastChild.dataset.tile)
+				const tilePlayed = game.dominoes.find(tile => tile.name === game.mouseTarget.dataset.tile)
+				const tileAtTheTable = game.dominoes.find(tile => tile.name === event.target.lastChild.dataset.tile)
+				
 
-				const [foundMatch, match] = game.checkMatch(elem1, elem2)
+				const [foundMatch, match] = game.checkMatch(tilePlayed, tileAtTheTable)
 
 				if (foundMatch) {
 					game.mouseTarget.parentNode.removeChild(game.mouseTarget);
 					event.target.appendChild(game.mouseTarget);
 					
-
-					elem1.boardSide = 'right'
-					if (!elem1.double) game.fixRotation(elem1, "R-"+match)
-
-					game.changePlayer()
+					tilePlayed.boardSide = 'right'
+					if (!tilePlayed.double) game.fixRotation(tilePlayed, "R-"+match)
+					game.removeTileFromPlayer()
 				}
 			}
 			else {
-				const elem1 = game.dominoes.find(tile => tile.name === game.mouseTarget.dataset.tile)
-				const elem2 = game.dominoes.find(tile => tile.name === event.target.querySelector('.tile').dataset.tile)
+				const tilePlayed = game.dominoes.find(tile => tile.name === game.mouseTarget.dataset.tile)
+				const tileAtTheTable = game.dominoes.find(tile => tile.name === event.target.querySelector('.tile').dataset.tile)
 
-				const [foundMatch, match] = game.checkMatch(elem1, elem2)
+				const [foundMatch, match] = game.checkMatch(tilePlayed, tileAtTheTable)
 
 				if (foundMatch) {
 
 					game.mouseTarget.parentNode.removeChild(game.mouseTarget);
 					event.target.insertBefore(game.mouseTarget, event.target.querySelector('.tile'))
 
-					elem1.boardSide = 'left'
-					if (!elem1.double) game.fixRotation(elem1, "L-"+match)
-					game.changePlayer()
+					tilePlayed.boardSide = 'left'
+					if (!tilePlayed.double) game.fixRotation(tilePlayed, "L-"+match)
+					game.removeTileFromPlayer()
 				}
+			}
+			const winnerFound = game.checkWinner()
+			if (winnerFound) {
+				console.log(" We have a WINNER and is "+ game.playerTurn);
+				//show model of the winner
+			}
+			else{
+				game.changePlayer()		
 			}
 		}
 	})
@@ -114,7 +108,3 @@ function addListeners() {
 	})
 
 }
-// game.start()
-// debug listenter
-// document.addEventListener('click', e => console.log(e.target))
-

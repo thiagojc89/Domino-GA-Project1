@@ -1,15 +1,10 @@
 <!DOCTYPE html>
 <html>
 <head>
-	<!-- <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script> -->
-
-	<!-- <script src="js/jquery-ui.min.js"></script> -->
-	<!-- <link rel="stylesheet" type="text/css" href="css/jquery-ui.css"> -->
 	<link rel="stylesheet" type="text/css" href="css/style.css">
 	<title>DoMInO</title>
 </head>
 <body>
-
 	<div id="player1">
 			
 		<h2>Player 1</h2>
@@ -20,16 +15,13 @@
 		</div>
 	</div>
 	<div id="container">
-	<!-- <div id="dominoPile"></div> -->
 		<div id="gameBoard" ondragover="return false">
 			<div id="instruction">
-				<ol>
+				<ul>
 					<li>Click on the Start button to beggin the game.</li>
 					<li>Drag and drop the domino inside the gamebord.</li>
 					<li>To performe a match drag the domino and snap to another domino.</li>
-					<li>To Rotate the Domino hold the cursor and press "R".</li>
-					<li>To Switch the Domino sides hold the cursor and press "S" or "A".</li>
-				</ol>
+				</ul>
 			</div>
 			<div id="image-start-game"></div>
 		</div>
@@ -40,8 +32,8 @@
 		<h2>Player 2</h2>
 		<div id="dominoPlayer2"></div>
 		<div>
-				<div id="player2DominoGrid" class="newDomino">Domino ++</div>
-				<div class="passTurn">Pass Turn</div>
+			<div id="player2DominoGrid" class="newDomino">Domino ++</div>
+			<div class="passTurn">Pass Turn</div>
 		</div>
 	</div>
 <script type="text/javascript" src="js/game.js"></script>

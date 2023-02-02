@@ -10,66 +10,10 @@ class Game {
 		this.left = null,
 		this.mouseDown = false,
 		this.mouseTarget = null,
-		this.guide = ["000", "010", "101", "111", "202", "212", "222"],
-		this.switchTurn = 'player1'
+		this.playerTurn = 'player1'
 	}
-	generateDominoesTiles() {
-		for (let i = 0; i <= 6; i++) {
-			for (let j = i; j <= 6; j++) {
-
-				const domino = document.createElement('div')
-
-				domino.classList.add('dominoV')
-
-				const sideA = document.createElement('div')
-				sideA.classList.add('side-V')
-
-				for (let x = 0; x < 3; x++) {
-
-					const div = document.createElement('div')
-					div.classList.add('side-V-dot')
-
-					for (let y = 0; y < parseInt(this.guide[i][x]); y++) {
-
-						const dot = document.createElement('div')
-						dot.classList.add('dot')
-						div.appendChild(dot)
-
-					}
-					sideA.appendChild(div)
-				}
-				domino.appendChild(sideA)
-
-				const sideB = document.createElement('div')
-				sideB.classList.add('side-V')
-
-				for (let x = 0; x < 3; x++) {
-
-					const div = document.createElement('div')
-					div.classList.add('side-V-dot')
-
-					for (let y = 0; y < parseInt(this.guide[j][x]); y++) {
-
-						const dot = document.createElement('div')
-						dot.classList.add('dot')
-						div.appendChild(dot)
-					}
-					sideB.appendChild(div)
-				}
-				domino.appendChild(sideB)
-
-				domino.classList.add('tile')
-
-				domino.dataset.tile = `tile${i}by${j}`
-				const newTile = new tile(domino, domino.dataset.tile, i, j)
-				this.dominoes.push(newTile)
-
-			}
-		}
-	}
-
+	
 	start() {
-		this.generateDominoesTiles()
 		this.dealDominoes()
 		this.appendTotheScreen()
 		addListeners()
@@ -110,28 +54,22 @@ class Game {
 	}
 
 	checkMatch(element1, element2) {
-		// console.log("elem1", element1)
-		// console.log("elem2", element2)
 		switch (true) {
 			case element1.sideA[0] === element2.sideA[0] && element2.sideA[1]:
 				element1.sideA[1] = false
 				element2.sideA[1] = false
-				// element1.rotateTile()
 				return [true, 'AA']
 			case element1.sideA[0] === element2.sideB[0] && element2.sideB[1]:
 				element1.sideA[1] = false
 				element2.sideB[1] = false
-				// element1.rotateTile()
 				return [true, 'AB']
 			case element1.sideB[0] === element2.sideA[0] && element2.sideA[1]:
 				element1.sideB[1] = false
 				element2.sideA[1] = false
-				// element1.rotateTile()
 				return [true, 'BA']
 			case element1.sideB[0] === element2.sideB[0] && element2.sideB[1]:
 				element1.sideB[1] = false
 				element2.sideB[1] = false
-				// element1.rotateTile()
 				return [true, 'BB']
 			default:
 				return false
@@ -201,14 +139,14 @@ class Game {
 	changePlayer() {
 		const player1 = document.querySelector('#dominoPlayer1')
 		const player2 = document.querySelector('#dominoPlayer2')
-		if (game.switchTurn === "player1") {
+		if (game.playerTurn === "player1") {
 
 			player1.setAttribute('style', 'background-color: gray')
 			player1.childNodes.forEach(elem => elem.setAttribute('style', 'visibility: hidden'))
 
 			player2.setAttribute('style', 'background-color: rgba(0, 0, 255, 0.5)')
 			player2.childNodes.forEach(elem => elem.setAttribute('style', 'visibility: visible'))
-			game.switchTurn = "player2"
+			game.playerTurn = "player2"
 		}
 		else {
 
@@ -217,7 +155,31 @@ class Game {
 
 			player1.setAttribute('style', 'background-color: rgba(255, 0, 0, 0.5)')
 			player1.childNodes.forEach(elem => elem.setAttribute('style', 'visibility: visible'))
-			game.switchTurn = "player1"
+			game.playerTurn = "player1"
+		}
+
+	}
+	removeTileFromPlayer(){
+		if (this.playerTurn === "player1"){
+			const idx = this.dominoesPlayer1Array.findIndex(tile => tile.name === this.cursorDominoTile.name)
+			this.dominoesPlayer1Array.splice(idx,1)
+		}
+		else{
+			const idx = this.dominoesPlayer2Array.findIndex(tile => tile.name === this.cursorDominoTile.name)
+			this.dominoesPlayer2Array.splice(idx,1)
 		}
 	}
+
+	checkWinner(){
+		return this.dominoesPlayer1Array.length > 0 && this.dominoesPlayer2Array.length > 0 ? false : true
+	}
 }
+
+
+
+
+
+
+
+
+
