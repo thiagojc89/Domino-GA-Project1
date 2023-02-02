@@ -1,7 +1,7 @@
 class Game {
 	constructor(){
 
-		this.dominoes = [],
+		this.dominoes = generateDominoesTiles(),
 		this.dominoesPlayer1Array = [],
 		this.dominoesPlayer2Array = [],
 		this.dominoPile = [],
@@ -16,7 +16,6 @@ class Game {
 	start() {
 		this.dealDominoes()
 		this.appendTotheScreen()
-		addListeners()
 	}
 
 	dealDominoes() {
@@ -173,8 +172,89 @@ class Game {
 	checkWinner(){
 		return this.dominoesPlayer1Array.length > 0 && this.dominoesPlayer2Array.length > 0 ? false : true
 	}
+
 }
 
+function generateDominoesTiles() {
+	const guide = ["000", "010", "101", "111", "202", "212", "222"]
+	const tiles = []
+	for (let i = 0; i <= 6; i++) {
+		for (let j = i; j <= 6; j++) {
+
+			const domino = document.createElement('div')
+			domino.classList.add('dominoV')
+
+			const sideA = document.createElement('div')
+			sideA.classList.add('side-V')
+
+			for (let x = 0; x < 3; x++) {
+
+				const div = document.createElement('div')
+				div.classList.add('side-V-dot')
+
+				for (let y = 0; y < parseInt(guide[i][x]); y++) {
+
+					const dot = document.createElement('div')
+					dot.classList.add('dot')
+					div.appendChild(dot)
+
+				}
+				sideA.appendChild(div)
+			}
+			domino.appendChild(sideA)
+
+			const sideB = document.createElement('div')
+			sideB.classList.add('side-V')
+
+			for (let x = 0; x < 3; x++) {
+
+				const div = document.createElement('div')
+				div.classList.add('side-V-dot')
+
+				for (let y = 0; y < parseInt(guide[j][x]); y++) {
+
+					const dot = document.createElement('div')
+					dot.classList.add('dot')
+					div.appendChild(dot)
+				}
+				sideB.appendChild(div)
+			}
+			domino.appendChild(sideB)
+			domino.classList.add('tile')
+			domino.dataset.tile = `tile${i}by${j}`
+
+
+			// make this element draggable
+			domino.draggable = true
+
+			// https://developer.mozilla.org/en-US/docs/Web/API/HTML_Drag_and_Drop_API/Drag_operations#draggableattribute
+			domino.addEventListener('dragstart', (event) => {
+				event.dataTransfer.setData('text/plain', 'This text may be dragged')
+			})
+
+			//Mouse DOWN listener
+			domino.addEventListener('mousedown', function (e) {
+				game.mousedown = true
+				game.mouseTarget = e.currentTarget
+				game.cursorDominoTile = game.dominoes.find((tile) => tile.name === e.currentTarget.dataset.tile)
+				game.top = e.currentTarget.top
+				game.left = e.currentTarget.left
+
+			})
+
+
+
+
+			const newTile = new Tile(domino, domino.dataset.tile, i, j)
+			tiles.push(newTile)
+
+
+
+
+		}
+	}
+	return tiles
+}
 
 
 
