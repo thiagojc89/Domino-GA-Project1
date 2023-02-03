@@ -165,3 +165,20 @@ h2{
 #instruction ol li{
 	margin-top: 10px;
 }
+
+#winner-modal {
+	display: none;
+	font-size: 20px;
+
+}
+
+#new-game {
+	display: none;
+	border: 2px solid black;
+	border-radius: 10px;
+	font-size: 20px;
+	padding: 2px 5px;
+}
+
+
+

@@ -67,13 +67,17 @@ document.querySelector('#gameBoard').addEventListener('drop', (event) => {
 		}
 		const winnerFound = game.checkWinner()
 		if (winnerFound) {
-			console.log(" We have a WINNER and is "+ game.playerTurn);
-			//show model of the winner
+			game.endGame()
+
 		}
 		else{
 			game.changePlayer()		
 		}
 	}
+})
+
+document.querySelector("#new-game").addEventListener("click", ()=>{
+	game.startNewGame()
 })
 
 function _func(e) {

@@ -18,6 +18,26 @@ class Game {
 		this.appendTotheScreen()
 	}
 
+	resetState(){
+		this.dominoes = generateDominoesTiles(),
+		this.dominoesPlayer1Array = [],
+		this.dominoesPlayer2Array = [],
+		this.dominoPile = [],
+		this.cursorDominoTile = null,
+		this.top = null,
+		this.left = null,
+		this.mouseDown = false,
+		this.mouseTarget = null,
+		this.playerTurn = 'player1'
+
+		// remove all tile from the gameboard
+		document.querySelectorAll("#gameBoard > .tile").forEach(t => t.remove())
+		document.querySelectorAll("#dominoPlayer1 > .tile").forEach(t => t.remove())
+		document.querySelectorAll("#dominoPlayer2 > .tile").forEach(t => t.remove())
+
+	}
+
+
 	dealDominoes() {
 		const getRandom = () => Math.floor(Math.random() * this.dominoes.length)
 		for (let i = 0; i < 21; i += 1) {
@@ -173,6 +193,17 @@ class Game {
 		return this.dominoesPlayer1Array.length > 0 && this.dominoesPlayer2Array.length > 0 ? false : true
 	}
 
+	endGame(){
+		openWinnerModal()
+
+	}
+	startNewGame(){
+		document.querySelector("#winner-modal").setAttribute('style', 'display: none')
+		document.querySelector("#new-game").setAttribute('style', 'display: none')
+		this.resetState()
+		this.start()
+	}
+
 }
 
 function generateDominoesTiles() {
@@ -242,24 +273,13 @@ function generateDominoesTiles() {
 
 			})
 
-
-
-
 			const newTile = new Tile(domino, domino.dataset.tile, i, j)
 			tiles.push(newTile)
-
-
-
 
 		}
 	}
 	return tiles
 }
-
-
-
-
-
 
 
 
