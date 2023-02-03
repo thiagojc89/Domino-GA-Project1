@@ -34,6 +34,11 @@ class Game {
 		document.querySelectorAll("#gameBoard > .tile").forEach(t => t.remove())
 		document.querySelectorAll("#dominoPlayer1 > .tile").forEach(t => t.remove())
 		document.querySelectorAll("#dominoPlayer2 > .tile").forEach(t => t.remove())
+		document.querySelector('#dominoPlayer1').setAttribute('style', 'background-color: rgba(255, 0, 0, 0.5)')
+		document.querySelector('#dominoPlayer2').setAttribute('style', 'background-color: gray')
+
+		this.start()
+		document.querySelectorAll('#dominoPlayer2 > .tile').forEach(elem => elem.setAttribute('style', 'visibility: hidden'))
 
 	}
 
@@ -143,10 +148,13 @@ class Game {
 		const rand = Math.floor(Math.random() * this.dominoPile.length)
 		if (id === 'player1DominoGrid') {
 			document.querySelector('#dominoPlayer1').appendChild(this.dominoPile[rand].element)
+			this.dominoesPlayer1Array.push(this.dominoPile[rand].element)
 		}
 		if (id === 'player2DominoGrid') {
 			document.querySelector('#dominoPlayer2').appendChild(this.dominoPile[rand].element)
+			this.dominoesPlayer2Array.push(this.dominoPile[rand].element)
 		}
+
 		this.dominoPile.splice(rand, 1)
 		if (this.dominoPile.length === 0) {
 			document.querySelectorAll('.newDomino').forEach(elem => {
@@ -190,7 +198,7 @@ class Game {
 	}
 
 	checkWinner(){
-		return this.dominoesPlayer1Array.length > 0 && this.dominoesPlayer2Array.length > 0 ? false : true
+		return this.dominoesPlayer1Array.length > 5 && this.dominoesPlayer2Array.length > 0 ? false : true
 	}
 
 	endGame(){
@@ -201,7 +209,6 @@ class Game {
 		document.querySelector("#winner-modal").setAttribute('style', 'display: none')
 		document.querySelector("#new-game").setAttribute('style', 'display: none')
 		this.resetState()
-		this.start()
 	}
 
 }
