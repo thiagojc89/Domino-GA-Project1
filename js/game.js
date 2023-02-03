@@ -37,11 +37,7 @@ class Game {
 		document.querySelector('#dominoPlayer1').setAttribute('style', 'background-color: rgba(255, 0, 0, 0.5)')
 		document.querySelector('#dominoPlayer2').setAttribute('style', 'background-color: gray')
 
-		this.start()
-		document.querySelectorAll('#dominoPlayer2 > .tile').forEach(elem => elem.setAttribute('style', 'visibility: hidden'))
-
 	}
-
 
 	dealDominoes() {
 		const getRandom = () => Math.floor(Math.random() * this.dominoes.length)
@@ -205,12 +201,6 @@ class Game {
 		openWinnerModal()
 
 	}
-	startNewGame(){
-		document.querySelector("#winner-modal").setAttribute('style', 'display: none')
-		document.querySelector("#new-game").setAttribute('style', 'display: none')
-		this.resetState()
-	}
-
 }
 
 function generateDominoesTiles() {
